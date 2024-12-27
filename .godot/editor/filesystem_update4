@@ -1,0 +1,9 @@
+res://Scenes/MainScene.tscn
+res://Scripts/noise.gdshader
+res://Scenes/plaster.tres
+res://Scripts/Window.gdshader
+res://Scenes/strom.mesh
+res://woodendoor.tres
+res://Scripts/enemy.gd
+res://Scripts/player.gd
+res://SimpletonScript.gd

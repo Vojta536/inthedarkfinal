@@ -1,0 +1,14 @@
+Node3D
+NavigationLink3D
+MeshInstance3D
+CollisionShape3D
+StaticBody3D
+Area3D
+MultiMeshInstance3D
+Node
+VoxelGI
+LightmapGI
+OmniLight3D
+WorldEnvironment
+AnimatedSprite2D
+Camera3D

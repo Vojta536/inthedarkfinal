@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8fanwoekcpji"]
+
+[ext_resource type="ArrayMesh" uid="uid://oeqrd730wogk" path="res://Scenes/strom.mesh" id="1_tvmuc"]
+[ext_resource type="Texture2D" uid="uid://bxvk2cwoe68hx" path="res://Textures/Bark014_1K-PNG (1)/Bark014_1K-PNG_Color.png" id="2_w4c3j"]
+[ext_resource type="Texture2D" uid="uid://0os5jngscik8" path="res://Textures/Bark014_1K-PNG (1)/Bark014_1K-PNG_Roughness.png" id="3_pr5tb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n6xhv"]
+albedo_texture = ExtResource("2_w4c3j")
+roughness_texture = ExtResource("3_pr5tb")
+uv1_scale = Vector3(3, 3, 3)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_crpar"]
+points = PackedVector3Array(4.51244, 17.064, -2.43434, -3.57928, 9.83852, -4.16867, 1.33305, -1.14453, 1.61062, -1.84379, 14.4635, 6.23728, 7.11503, 12.7305, 1.32247, 5.66858, 10.4144, -4.74713, -2.1341, -1.14453, 0.456917, -5.89283, 16.776, 1.32247, 0.467216, -1.14453, -2.14511, -4.73542, 9.26085, 3.92449, -1.84379, 17.3555, 5.36958, 2.20015, -1.14453, -0.410783, -1.267, 13.3082, -3.87943, -0.39989, -1.14453, 2.19017, -5.89283, 12.7305, -0.12155, 3.64533, 17.064, -3.01173, -1.84379, 13.5961, 6.23728, -5.31349, 16.776, 0.456917, -0.39989, -1.14453, -2.14511, 7.11503, 12.439, 0.167683, -2.42314, 13.5961, 6.23728, 3.93437, 9.83852, -4.74713, 7.11503, 13.0184, 1.32247, 5.66858, 10.9957, -4.74713, 2.20015, -1.14453, 0.456917, 1.62208, -1.14453, -1.56664, -1.55603, -1.14453, 1.61062, -2.42314, 17.3555, 4.50081, 0.178181, -1.14453, 2.19017, 7.11503, 13.0184, 0.456917, -5.55273, 13.309, -0.62445, 5.08923, 10.9957, -4.74713)
+
+[node name="Stromy" type="StaticBody3D"]
+
+[node name="Cube" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_tvmuc")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_n6xhv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_crpar")
