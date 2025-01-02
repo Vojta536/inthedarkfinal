@@ -7,12 +7,12 @@ func _ready():
 
 func _physics_process(delta):
 	get_tree().call_group("enemies","update_player_location",$Player.global_position)
-	print($Player/Camera3D/RayCast3D.get_collision_point().x)
+	#print($Player/Camera3D/RayCast3D.get_collision_point().x)
 	if(camplace):
 		$Cam.position = $Player/Camera3D/RayCast3D.get_collision_point()
 		$Cam.position.y += 1.5
-		print("Je ray pickable")
-		print($Cam.input_ray_pickable)
+		#print("Je ray pickable")
+		#print($Cam.input_ray_pickable)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://qj88f0vwv6dp"]
+
+[ext_resource type="Script" path="res://menu.gd" id="1_afmc7"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_afmc7")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Continue" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 701.0
+offset_top = 398.0
+offset_right = 1296.0
+offset_bottom = 644.0
+theme_override_font_sizes/font_size = 40
+text = "Play"
+
+[node name="EscapeLabel" type="Label" parent="Control"]
+offset_left = 794.0
+offset_top = 114.0
+offset_right = 1197.0
+offset_bottom = 224.0
+theme_override_font_sizes/font_size = 80
+text = "InTheDark"
+
+[connection signal="pressed" from="Control/Continue" to="." method="_on_continue_pressed"]
