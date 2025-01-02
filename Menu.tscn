@@ -21,6 +21,7 @@ theme_override_font_sizes/font_size = 40
 text = "Play"
 
 [node name="EscapeLabel" type="Label" parent="Control"]
+layout_mode = 0
 offset_left = 794.0
 offset_top = 114.0
 offset_right = 1197.0

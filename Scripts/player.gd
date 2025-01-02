@@ -130,11 +130,11 @@ func _physics_process(delta):
 		$Camera3D/SpotLight3D.light_energy -= 0.05 
 	
 	if Input.is_action_pressed("c"):
-		if SimpletonScript.playernoise < 50:
-			SimpletonScript.playernoise += 0.4
 		LightVisible = false
 		$Camera3D/SpotLight3D.light_energy = 0
 		if energy < 100:
+			if SimpletonScript.playernoise < 50:
+				SimpletonScript.playernoise += 0.4
 			energy = energy + 0.5
 			if $HandCrank.playing == false:
 				$HandCrank.playing = true

@@ -1,8 +1,10 @@
-res://Scenes/MainScene.tscn
+res://Menu.tscn
 res://Scripts/noise.gdshader
 res://Scenes/plaster.tres
 res://Scripts/Window.gdshader
 res://Scenes/strom.mesh
 res://woodendoor.tres
-res://Menu.tscn
 res://menu.gd
+res://Scenes/MainScene.tscn
+res://Scripts/player.gd
+res://Scripts/enemy.gd

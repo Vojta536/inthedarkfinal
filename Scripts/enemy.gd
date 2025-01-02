@@ -34,6 +34,8 @@ var agression = 0
 
 var PlayerHunt = false
 
+var playerJumpscare = false
+
 @onready var nav_agent = $NavigationAgent3D
 var SPEED = 2.0
 
@@ -198,3 +200,13 @@ func _on_wait_near_window_timeout():
 func _on_player_flash_enemy():
 	if reachedWinndow == true:
 		isFlashed = true
+
+
+func _on_jumpscare_detector_area_entered(area: Area3D) -> void:
+		if area.name == "PlayerJumpArea":
+			playerJumpscare = true
+			get_tree().change_scene_to_file("res://Menu.tscn")
+
+
+func _on_jumpscare_detector_area_exited(area: Area3D) -> void:
+	pass # Replace with function body.

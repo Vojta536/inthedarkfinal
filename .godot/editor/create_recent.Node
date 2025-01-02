@@ -1,3 +1,5 @@
+CollisionShape3D
+Area3D
 Button
 Control
 Node3D
@@ -6,10 +8,7 @@ AudioStreamPlayer3D
 AudioStreamPlayer
 StaticBody3D
 Timer
-CollisionShape3D
-Area3D
 NavigationLink3D
 MeshInstance3D
 MultiMeshInstance3D
 Node
-VoxelGI
