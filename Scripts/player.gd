@@ -18,6 +18,14 @@ signal placecamfalse
 signal camvisible
 signal caminvisible
 
+signal setWin1Visible
+signal setWin2Visible
+signal setWin3Visible
+signal setWin4Visible
+signal setWin5Visible
+signal setWin6Visible
+signal setWin7Visible
+
 var FlashCharged = true
 var LightVisible = true
 
@@ -143,7 +151,7 @@ func _physics_process(delta):
 	if LightVisible == true and energy > 0:
 		energy = energy - 0.02
 	
-	$Camera3D/Control/Energy.text = str(round(energy))
+	$Camera3D/Control/Energy.text = str(round(energy)) + "%"
 	
 	if Input.is_action_just_pressed("r"):
 		if LightVisible == true:
@@ -189,7 +197,7 @@ func _physics_process(delta):
 			if $Camera3D/RayCast3D.get_collider().visible == true:
 				$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 				if Input.is_action_pressed("lclick"):
-					if itemsel !=3:
+					if itemsel !=0:
 						itemarr[itemsel] = 1
 					update_items()
 
@@ -202,7 +210,58 @@ func _physics_process(delta):
 						$Camera3D/RayCast3D.get_collider().visible = false
 					update_items()
 					
-		
+
+		match($Camera3D/RayCast3D.get_collider().name):
+			"Bordel1":
+				if $Camera3D/RayCast3D.get_collider().visible == true:
+					$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+					if Input.is_action_pressed("lclick"):
+						$Camera3D/RayCast3D.get_collider().visible = false
+						SimpletonScript.barikadyOken[0] = 1
+						emit_signal("setWin1Visible")
+			"Bordel2":
+				if $Camera3D/RayCast3D.get_collider().visible == true:
+					$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+					if Input.is_action_pressed("lclick"):
+						$Camera3D/RayCast3D.get_collider().visible = false
+						SimpletonScript.barikadyOken[1] = 1
+						emit_signal("setWin2Visible")
+			"Bordel3":
+				if $Camera3D/RayCast3D.get_collider().visible == true:
+					$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+					if Input.is_action_pressed("lclick"):
+						$Camera3D/RayCast3D.get_collider().visible = false
+						SimpletonScript.barikadyOken[2] = 1
+						emit_signal("setWin3Visible")
+			"Bordel4":
+				if $Camera3D/RayCast3D.get_collider().visible == true:
+					$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+					if Input.is_action_pressed("lclick"):
+						$Camera3D/RayCast3D.get_collider().visible = false
+						SimpletonScript.barikadyOken[3] = 1
+						emit_signal("setWin4Visible")
+			"Bordel5":
+				if $Camera3D/RayCast3D.get_collider().visible == true:
+					$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+					if Input.is_action_pressed("lclick"):
+						$Camera3D/RayCast3D.get_collider().visible = false
+						SimpletonScript.barikadyOken[4] = 1
+						emit_signal("setWin5Visible")
+			"Bordel6":
+				if $Camera3D/RayCast3D.get_collider().visible == true:
+					$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+					if Input.is_action_pressed("lclick"):
+						$Camera3D/RayCast3D.get_collider().visible = false
+						SimpletonScript.barikadyOken[5] = 1
+						emit_signal("setWin6Visible")
+			"Bordel7":
+				if $Camera3D/RayCast3D.get_collider().visible == true:
+					$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+					if Input.is_action_pressed("lclick"):
+						$Camera3D/RayCast3D.get_collider().visible = false
+						SimpletonScript.barikadyOken[6] = 1
+						emit_signal("setWin7Visible")
+
 		match($Camera3D/RayCast3D.get_collider().name):
 			"WinDown1":
 				if $Camera3D/RayCast3D.get_collider().visible == false:
@@ -270,14 +329,7 @@ func _physics_process(delta):
 
 
 
-		if $Camera3D/RayCast3D.get_collider().name == "Cam1":
-			if itemarr[itemsel] == 1:
-				$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-				if Input.is_action_pressed("lclick"):
-					emit_signal("cam1")
-					if itemsel != 0:
-						itemarr[itemsel] = 0
-					update_items()
+
 
 		if $Camera3D/RayCast3D.get_collider().name == "ViewCam":
 			if Input.is_action_pressed("lclick"):

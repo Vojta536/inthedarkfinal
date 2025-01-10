@@ -1,10 +1,11 @@
-res://Menu.tscn
+res://Scenes/MainScene.tscn
 res://Scripts/noise.gdshader
 res://Scenes/plaster.tres
 res://Scripts/Window.gdshader
 res://Scenes/strom.mesh
 res://woodendoor.tres
-res://menu.gd
-res://Scenes/MainScene.tscn
-res://Scripts/player.gd
-res://Scripts/enemy.gd
+res://Scenes/NightLight.tres
+res://metalic.tres
+res://darkWood.tres
+res://SofaTex.tres
+res://Menu.tscn

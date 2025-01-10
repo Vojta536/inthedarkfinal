@@ -36,13 +36,30 @@ var PlayerHunt = false
 
 var playerJumpscare = false
 
+signal udelatBordel1
+signal udelatBordel2
+signal udelatBordel3
+signal udelatBordel4
+signal udelatBordel5
+signal udelatBordel6
+signal udelatBordel7
+
+
 @onready var nav_agent = $NavigationAgent3D
 var SPEED = 2.0
 
 func next_destination():
 	if isFlashed == false and InterestChecksLeft > 0:
 		var foundnextdes = false
+		var randomNumber = 0
 		for i in range(nextCheck.size()):
+			randomNumber = randi() % 7
+			print("randomnumber")
+			print(randomNumber)
+			if nextCheck[randomNumber] == 0 and foundnextdes == false:
+				nextCheck[randomNumber] = 1
+				foundnextdes = true
+				nextDesOkno = randomNumber
 			if nextCheck[i] == 0 and foundnextdes == false:
 				nextCheck[i] = 1
 				foundnextdes = true
@@ -138,6 +155,9 @@ func _on_wait_near_window_timeout():
 					self.position = telpreddole
 					PlayerHunt = true
 				else:
+					if SimpletonScript.barikadyOken[0] == 1:
+						emit_signal("udelatBordel1")
+						SimpletonScript.barikadyOken[0] = 0
 					isFlashed = false
 					next_destination()
 					print("next_des")
@@ -146,6 +166,9 @@ func _on_wait_near_window_timeout():
 					self.position = telpreddole1
 					PlayerHunt = true
 				else:
+					if SimpletonScript.barikadyOken[1] == 1:
+						emit_signal("udelatBordel2")
+						SimpletonScript.barikadyOken[1] = 0
 					isFlashed = false
 					next_destination()
 					print("next_des")
@@ -154,6 +177,9 @@ func _on_wait_near_window_timeout():
 					self.position = telVpravodole
 					PlayerHunt = true
 				else:
+					if SimpletonScript.barikadyOken[2] == 1:
+						emit_signal("udelatBordel3")
+						SimpletonScript.barikadyOken[2] = 0
 					isFlashed = false
 					next_destination()
 					print("next_des")
@@ -162,6 +188,9 @@ func _on_wait_near_window_timeout():
 					self.position = telVzaduDole
 					PlayerHunt = true
 				else:
+					if SimpletonScript.barikadyOken[3] == 1:
+						emit_signal("udelatBordel4")
+						SimpletonScript.barikadyOken[3] = 0
 					isFlashed = false
 					next_destination()
 					print("next_des")
@@ -170,6 +199,9 @@ func _on_wait_near_window_timeout():
 					self.position = telVzaduDole2
 					PlayerHunt = true
 				else:
+					if SimpletonScript.barikadyOken[4] == 1:
+						emit_signal("udelatBordel5")
+						SimpletonScript.barikadyOken[4] = 0
 					isFlashed = false
 					next_destination()
 					print("next_des")
@@ -178,6 +210,9 @@ func _on_wait_near_window_timeout():
 					self.position = telVlevoDole2
 					PlayerHunt = true
 				else:
+					if SimpletonScript.barikadyOken[5] == 1:
+						emit_signal("udelatBordel6")
+						SimpletonScript.barikadyOken[5] = 0
 					isFlashed = false
 					next_destination()
 					print("next_des")
@@ -186,6 +221,9 @@ func _on_wait_near_window_timeout():
 					self.position = telVlevoDole
 					PlayerHunt = true
 				else:
+					if SimpletonScript.barikadyOken[6] == 1:
+						emit_signal("udelatBordel7")
+						SimpletonScript.barikadyOken[6] = 0
 					isFlashed = false
 					next_destination()
 					print("next_des")
@@ -203,10 +241,12 @@ func _on_player_flash_enemy():
 
 
 func _on_jumpscare_detector_area_entered(area: Area3D) -> void:
-		if area.name == "PlayerJumpArea":
-			playerJumpscare = true
-			get_tree().change_scene_to_file("res://Menu.tscn")
+	$Jumpscare.playing = true
 
 
 func _on_jumpscare_detector_area_exited(area: Area3D) -> void:
 	pass # Replace with function body.
+
+
+func _on_audio_stream_player_3d_finished() -> void:
+	get_tree().change_scene_to_file("res://Menu.tscn")
