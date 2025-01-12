@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://coiym4lhebkp1"]
+
+[ext_resource type="Texture2D" uid="uid://b818acpwftp0l" path="res://Textures/Ground037_1K-PNG/Ground037_1K-PNG_Color.png" id="1_thj8q"]
+[ext_resource type="Texture2D" uid="uid://c2brcu1pf0pkn" path="res://Textures/Ground037_1K-PNG/Ground037_1K-PNG_Roughness.png" id="2_tlf27"]
+
+[resource]
+albedo_texture = ExtResource("1_thj8q")
+roughness_texture = ExtResource("2_tlf27")
+uv1_scale = Vector3(30, 30, 30)

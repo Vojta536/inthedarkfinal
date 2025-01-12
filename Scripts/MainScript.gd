@@ -108,3 +108,7 @@ func _on_player_set_win_6_visible() -> void:
 
 func _on_player_set_win_7_visible() -> void:
 	$Barikady/WinDown7.visible = true
+
+
+func _on_player_refresh_location_label() -> void:
+	$ControlPanel/MonsterLocationLabel.text = str(SimpletonScript.MonsterLoc[0]) +":"+ str(SimpletonScript.MonsterLoc[1])

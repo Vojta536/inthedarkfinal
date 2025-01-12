@@ -36,6 +36,8 @@ var PlayerHunt = false
 
 var playerJumpscare = false
 
+var roaming = true
+
 signal udelatBordel1
 signal udelatBordel2
 signal udelatBordel3
@@ -49,7 +51,7 @@ signal udelatBordel7
 var SPEED = 2.0
 
 func next_destination():
-	if isFlashed == false and InterestChecksLeft > 0:
+	if isFlashed == false and InterestChecksLeft > 0 and roaming == false:
 		var foundnextdes = false
 		var randomNumber = 0
 		for i in range(nextCheck.size()):
@@ -90,6 +92,9 @@ func next_destination():
 		nextDesIsWindow = true
 		InterestChecksLeft = InterestChecksLeft - 1
 	else:
+		roaming = true
+		SimpletonScript.MonsterLoc[0] = 0
+		SimpletonScript.MonsterLoc[1] = 0
 		nav_agent.set_target_position(theForest)
 		isFlashed = false
 		reachedWinndow = false
@@ -142,8 +147,9 @@ func _on_navigation_agent_3d_navigation_finished():
 
 
 func _on_start_timer_timeout():
-	next_destination()
-	$Model/AnimationPlayer.play("walk")
+	pass
+	#next_destination()
+	#$Model/AnimationPlayer.play("walk")
 
 
 
@@ -250,3 +256,33 @@ func _on_jumpscare_detector_area_exited(area: Area3D) -> void:
 
 func _on_audio_stream_player_3d_finished() -> void:
 	get_tree().change_scene_to_file("res://Menu.tscn")
+
+
+func _on_monster_roam_step_timeout() -> void:
+	if roaming == true:
+		var randomNumber1 = randi() % 10
+		var randomNumber2 = randi() % 10
+		
+		if randomNumber1 < 8 and SimpletonScript.MonsterLoc[0] < 5 and SimpletonScript.MonsterLoc[0] < 10:
+			SimpletonScript.MonsterLoc[0] = SimpletonScript.MonsterLoc[0] + 1
+		elif randomNumber1 > 8 and SimpletonScript.MonsterLoc[0] < 5 and SimpletonScript.MonsterLoc[0] > 0:
+			SimpletonScript.MonsterLoc[0] = SimpletonScript.MonsterLoc[0] -1
+		elif randomNumber1 < 8 and SimpletonScript.MonsterLoc[0] > 5 and SimpletonScript.MonsterLoc[0] > 0:
+			SimpletonScript.MonsterLoc[0] = SimpletonScript.MonsterLoc[0] -1
+		elif randomNumber1 > 8 and SimpletonScript.MonsterLoc[0] < 5 and SimpletonScript.MonsterLoc[0] < 10:
+			SimpletonScript.MonsterLoc[0] = SimpletonScript.MonsterLoc[0] +1
+			
+		if randomNumber2 < 8 and SimpletonScript.MonsterLoc[1] < 5 and SimpletonScript.MonsterLoc[1] < 10:
+			SimpletonScript.MonsterLoc[1] = SimpletonScript.MonsterLoc[1] + 1
+		elif randomNumber2 > 8 and SimpletonScript.MonsterLoc[1] < 5 and SimpletonScript.MonsterLoc[1] > 0:
+			SimpletonScript.MonsterLoc[1] = SimpletonScript.MonsterLoc[1] -1
+		elif randomNumber2 < 8 and SimpletonScript.MonsterLoc[1] > 5 and SimpletonScript.MonsterLoc[1] > 0:
+			SimpletonScript.MonsterLoc[1] = SimpletonScript.MonsterLoc[1] -1
+		elif randomNumber2 > 8 and SimpletonScript.MonsterLoc[1] < 5 and SimpletonScript.MonsterLoc[1] < 10:
+			SimpletonScript.MonsterLoc[1] = SimpletonScript.MonsterLoc[1] +1
+		print(SimpletonScript.MonsterLoc[0])
+		print(SimpletonScript.MonsterLoc[1])
+		if SimpletonScript.MonsterLoc[1] == 5 and SimpletonScript.MonsterLoc[0] == 5:
+			roaming = false
+			next_destination()
+			$Model/AnimationPlayer.play("walk")
