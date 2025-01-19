@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://u6qq5fo7f2fl"]
+
+[ext_resource type="Shader" path="res://Scripts/Window.gdshader" id="1_byfhf"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_byfhf")
+shader_parameter/window_tint = Vector4(0.8, 0.9, 1, 0.15)
+shader_parameter/reflection_intensity = 0.1
+shader_parameter/distortion_strength = 0.2

@@ -1,14 +1,5 @@
 res://Scenes/MainScene.tscn
-res://Scripts/noise.gdshader
-res://Scenes/plaster.tres
 res://Scripts/Window.gdshader
-res://Scenes/strom.mesh
-res://woodendoor.tres
-res://metalic.tres
-res://darkWood.tres
-res://SofaTex.tres
-res://metaldoor.tres
-res://ground.tres
 res://Menu.tscn
-res://metal_door.tscn
+res://Scenes/managment_system.gd
 res://Scripts/player.gd

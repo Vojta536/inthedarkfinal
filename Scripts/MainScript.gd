@@ -37,9 +37,10 @@ func _on_player_caminvisible():
 
 
 func _on_player_viewcam():
-	if $Cam.visible == true:
-		$Cam/Camera3D.make_current()
-		emit_signal("usingcamera")
+	$Player/ManagmentSystem.visible = true
+	#if $Cam.visible == true:
+		#$Cam/Camera3D.make_current()
+		#emit_signal("usingcamera")
 
 
 func _on_player_cam_1():
@@ -47,39 +48,74 @@ func _on_player_cam_1():
 	$Cam/ViewBox.visible = false
 
 
-func _on_enemy_udelat_bordel_1() -> void:
-	$BordelNaZemi/Bordel1.visible = true
-	$Barikady/WinDown1.visible = false
 
+
+
+func _on_enemy_udelat_bordel(index: int, window_mesh_path: String, barricade_path: String, mess_path: String) -> void:
+	if SimpletonScript.stavOken[index] == 0 and get_node(window_mesh_path + "/MeshInstance3D").visible == true:
+		get_node(window_mesh_path + "/MeshInstance3D").visible = false
+		get_node(window_mesh_path + "/BrokenOkno").visible = true
+		get_node(window_mesh_path + "/GlassAudio").playing = true
+	elif SimpletonScript.stavBarikad[index] == 0 and get_node(barricade_path).visible == true:
+		get_node(mess_path).visible = true
+		get_node(barricade_path).visible = false
+
+func _on_enemy_udelat_bordel_1() -> void:
+	_on_enemy_udelat_bordel(
+		0,
+		"OknaMeshes/OknoPredDole",
+		"Barikady/WinDown1",
+		"BordelNaZemi/Bordel1"
+	)
 
 func _on_enemy_udelat_bordel_2() -> void:
-	$BordelNaZemi/Bordel2.visible = true
-	$Barikady/WinDown2.visible = false
-
+	_on_enemy_udelat_bordel(
+		1,
+		"OknaMeshes/OknoPredDole2",
+		"Barikady/WinDown2",
+		"BordelNaZemi/Bordel2"
+	)
 
 func _on_enemy_udelat_bordel_3() -> void:
-	$BordelNaZemi/Bordel3.visible = true
-	$Barikady/WinDown3.visible = false
-
+	_on_enemy_udelat_bordel(
+		2,
+		"OknaMeshes/OknoVpravoDole",
+		"Barikady/WinDown3",
+		"BordelNaZemi/Bordel3"
+	)
 
 func _on_enemy_udelat_bordel_4() -> void:
-	$BordelNaZemi/Bordel4.visible = true
-	$Barikady/WinDown4.visible = false
-
+	_on_enemy_udelat_bordel(
+		3,
+		"OknaMeshes/OknoVzaduDole",
+		"Barikady/WinDown4",
+		"BordelNaZemi/Bordel4"
+	)
 
 func _on_enemy_udelat_bordel_5() -> void:
-	$BordelNaZemi/Bordel5.visible = true
-	$Barikady/WinDown5.visible = false
-
+	_on_enemy_udelat_bordel(
+		4,
+		"OknaMeshes/OknoVzaduDole2",
+		"Barikady/WinDown5",
+		"BordelNaZemi/Bordel5"
+	)
 
 func _on_enemy_udelat_bordel_6() -> void:
-	$BordelNaZemi/Bordel6.visible = true
-	$Barikady/WinDown6.visible = false
-
+	_on_enemy_udelat_bordel(
+		5,
+		"OknaMeshes/OknoVlevoDole2",
+		"Barikady/WinDown6",
+		"BordelNaZemi/Bordel6"
+	)
 
 func _on_enemy_udelat_bordel_7() -> void:
-	$BordelNaZemi/Bordel7.visible = true
-	$Barikady/WinDown7.visible = false
+	_on_enemy_udelat_bordel(
+		6,
+		"OknaMeshes/OknoVlevoDole",
+		"Barikady/WinDown7",
+		"BordelNaZemi/Bordel7"
+	)
+
 
 
 func _on_player_set_win_1_visible() -> void:

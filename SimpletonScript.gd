@@ -1,7 +1,11 @@
 extends Node
 
 var playernoise = 0
-var barikadyOken = [0,0,0,0,0,0,0]
+var stavOken = [1,1,1,1,1,1,1]
+var stavBarikad = [0,0,0,0,0,0,0]
+
+
+var monsterWall = 0
 
 var MonsterLoc = [0,0]
 # Called when the node enters the scene tree for the first time.
