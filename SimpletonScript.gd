@@ -5,6 +5,14 @@ var stavOken = [1,1,1,1,1,1,1]
 var stavBarikad = [0,0,0,0,0,0,0]
 
 
+
+
+var alarmFixed = false
+
+var openedWindowsRoom = false
+
+var lureFixed = false
+
 var monsterWall = 0
 
 var MonsterLoc = [0,0]

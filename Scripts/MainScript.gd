@@ -148,3 +148,27 @@ func _on_player_set_win_7_visible() -> void:
 
 func _on_player_refresh_location_label() -> void:
 	$ControlPanel/MonsterLocationLabel.text = str(SimpletonScript.MonsterLoc[0]) +":"+ str(SimpletonScript.MonsterLoc[1])
+
+
+func _on_player_set_window_models() -> void:
+	if SimpletonScript.stavOken[0] == 0:
+		$OknaMeshes/OknoPredDole/MeshInstance3D.visible = false
+		$OknaMeshes/OknoPredDole/BrokenOkno.visible = true
+	if SimpletonScript.stavOken[1] == 0:
+		$OknaMeshes/OknoPredDole2/MeshInstance3D.visible = false
+		$OknaMeshes/OknoPredDole2/BrokenOkno.visible = true
+	if SimpletonScript.stavOken[2] == 0:
+		$OknaMeshes/OknoVpravoDole/MeshInstance3D.visible = false
+		$OknaMeshes/OknoVpravoDole/BrokenOkno.visible = true
+	if SimpletonScript.stavOken[3] == 0:
+		$OknaMeshes/OknoVzaduDole/MeshInstance3D.visible = false
+		$OknaMeshes/OknoVzaduDole/BrokenOkno.visible = true
+	if SimpletonScript.stavOken[4] == 0:
+		$OknaMeshes/OknoVzaduDole2/MeshInstance3D.visible = false
+		$OknaMeshes/OknoVzaduDole2/BrokenOkno.visible = true
+	if SimpletonScript.stavOken[5] == 0:
+		$OknaMeshes/OknoVlevoDole2/MeshInstance3D.visible = false
+		$OknaMeshes/OknoVlevoDole2/BrokenOkno.visible = true
+	if SimpletonScript.stavOken[6] == 0:
+		$OknaMeshes/OknoVlevoDole/MeshInstance3D.visible = false
+		$OknaMeshes/OknoVlevoDole/BrokenOkno.visible = true

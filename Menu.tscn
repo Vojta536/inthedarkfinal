@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://qj88f0vwv6dp"]
+[gd_scene load_steps=4 format=3 uid="uid://qj88f0vwv6dp"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_afmc7"]
 [ext_resource type="PackedScene" uid="uid://bg6t84vr8ypp5" path="res://Models/plochamensi.glb" id="2_07oia"]
+[ext_resource type="Script" path="res://MainMenu.gd" id="2_elki2"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_afmc7")
@@ -11,6 +12,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("2_elki2")
 
 [node name="Continue" type="Button" parent="Control"]
 layout_mode = 0
@@ -21,7 +23,7 @@ offset_bottom = 644.0
 theme_override_font_sizes/font_size = 40
 text = "Play"
 
-[node name="EscapeLabel" type="Label" parent="Control"]
+[node name="Title" type="Label" parent="Control"]
 layout_mode = 0
 offset_left = 794.0
 offset_top = 114.0
@@ -30,7 +32,17 @@ offset_bottom = 224.0
 theme_override_font_sizes/font_size = 80
 text = "InTheDark"
 
+[node name="New Game" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 701.0
+offset_top = 695.0
+offset_right = 1296.0
+offset_bottom = 941.0
+theme_override_font_sizes/font_size = 40
+text = "New Game"
+
 [node name="plochamensi" parent="." instance=ExtResource("2_07oia")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.30108, 0, 6.17906)
 
 [connection signal="pressed" from="Control/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="Control/New Game" to="." method="_on_new_game_pressed"]

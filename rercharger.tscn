@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://cx2cbqbmf4y88"]
+
+[ext_resource type="Script" path="res://rerchargerSingular.gd" id="1_fe4eg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_m1gtk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_baulf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uguqy"]
+albedo_color = Color(0.996078, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.780392, 0, 0, 1)
+emission_energy_multiplier = 3.64
+
+[sub_resource type="SphereMesh" id="SphereMesh_an458"]
+material = SubResource("StandardMaterial3D_uguqy")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_swoxc"]
+albedo_color = Color(1, 0.611765, 0, 1)
+emission_enabled = true
+emission = Color(0.996806, 0.561896, 0, 1)
+emission_energy_multiplier = 2.26
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3fpun"]
+albedo_color = Color(0.00392157, 1, 0, 1)
+emission_enabled = true
+emission = Color(0.0823529, 0.678431, 0, 1)
+
+[node name="Rercharger" type="Area3D" groups=["rechargers"]]
+script = ExtResource("1_fe4eg")
+
+[node name="RecargerModel" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_m1gtk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_baulf")
+
+[node name="NoBattery" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.179978, 0, 0, 0, 0.179978, 0, 0, 0, 0.179978, 0.485764, 0.320007, 0.310022)
+mesh = SubResource("SphereMesh_an458")
+
+[node name="Charging" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.179978, 0, 0, 0, 0.179978, 0, 0, 0, 0.179978, 0.485764, 0.320007, -0.0135157)
+visible = false
+mesh = SubResource("SphereMesh_an458")
+surface_material_override/0 = SubResource("StandardMaterial3D_swoxc")
+
+[node name="Charged" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.179978, 0, 0, 0, 0.179978, 0, 0, 0, 0.179978, 0.485764, 0.320007, -0.321282)
+visible = false
+mesh = SubResource("SphereMesh_an458")
+surface_material_override/0 = SubResource("StandardMaterial3D_3fpun")
+
+[node name="ChargingTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[connection signal="timeout" from="ChargingTimer" to="." method="_on_charging_timer_timeout"]

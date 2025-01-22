@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvjdun0ryxhm"]
+
+[ext_resource type="Script" path="res://NightFinishedScreen.gd" id="1_dtgk0"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_dtgk0")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 466.0
+offset_top = 338.0
+offset_right = 578.0
+offset_bottom = 361.0
+text = "Night Finished"

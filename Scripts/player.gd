@@ -27,14 +27,37 @@ signal setWin5Visible
 signal setWin6Visible
 signal setWin7Visible
 
+var hour = 0
+
+
+
+
+
+
+
+var save_path = "user://variable.save"
+
+signal openWindowRoomDoor
+
 signal refreshLocationLabel
 
 var FlashCharged = true
 var LightVisible = true
 
+var enteringPin = false
+
+
 var generatorFull = false
 
 var alarmFixed = false
+
+var archivePcView = false
+
+var windowsRoomKeycardInHand = false
+
+var openedWindowsRoom = false
+
+var lureFixed = false
 
 var flashBatteries = [2,2,2,2]
 var batteryChargers = [0,0,0,0]
@@ -44,8 +67,38 @@ signal flashEnemy
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+var noc = 1
+var data = {
+			"noc": noc,
+			"windowRoomState": openedWindowsRoom,
+			"alarmRoomState": alarmFixed,
+			"lureRoomState": lureFixed,
+			"stavOken": [1,1,1,1,1,1,1]
+		}
+
+signal setWindowModels
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	
+	if FileAccess.file_exists(save_path) == false:
+		var file = FileAccess.open(save_path, FileAccess.WRITE)
+		noc = 1
+		file.store_var(data)
+	if FileAccess.file_exists(save_path) == true:
+		var file = FileAccess.open(save_path,FileAccess.READ)
+		data = file.get_var()
+		noc = data["noc"] 
+		openedWindowsRoom = data["windowRoomState"] 
+		alarmFixed = data["alarmRoomState"] 
+		lureFixed = data["lureRoomState"]
+		SimpletonScript.stavOken = data["stavOken"]
+		if lureFixed == true:
+			$ManagmentSystem/SoundSystem.visible = true
+		if alarmFixed == true:
+			$ManagmentSystem/DetectionSystem.visible = true
+		emit_signal("setWindowModels")
 	
 	
 func get_ray_location():
@@ -62,8 +115,125 @@ func _placing_barricades(WindowID,colliderFun):
 					SimpletonScript.stavBarikad[WindowID] = 1
 					update_items()
 
+func on_leftClick():
+	print("ran")
+	collider = $Camera3D/RayCast3D.get_collider()
+	if $Camera3D/RayCast3D.is_colliding():
+		if collider.name == "ButtonMonsterRefresh":
+			emit_signal("refreshLocationLabel")
+		if collider.name == "Cam" and placecam == false:
+			if collider.visible == true:
+				$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+				if itemsel !=0:
+					itemarr[itemsel] = 1
+				update_items()
+
+		if collider.get_parent().name == "BarikadyPickUps":
+			if collider.visible == true:
+				$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+				if itemsel !=0:
+					itemarr[itemsel] = 2
+					collider.visible = false
+				update_items()
+					
+		if collider.name == "Benzin":
+			if collider.visible == true:
+				$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+				if itemsel !=0:
+					itemarr[itemsel] = 3
+					collider.visible = false
+				update_items()
+					
+					
+		if collider.name == "Generator":
+			if collider.visible == true:
+				$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+				if itemsel !=0:
+						if itemarr[itemsel] == 3:
+							itemarr[itemsel] = 0
+							generatorFull = true
+							update_items()
+							
+		if collider.name == "ObnoveniDetekce":
+			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+			if generatorFull:
+				alarmFixed = true
+				update_items()
+				$ManagmentSystem/DetectionSystem.visible = true
+						
+		if collider.name == "PinCode":
+			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+			$Camera3D/Control/PinCode.visible = true
+			enteringPin = true
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+				
+		if collider.name == "ObnoveniZvuku":
+			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+			if generatorFull:
+						$ManagmentSystem/SoundSystem.visible = true
+						lureFixed = true
+						
+		if collider.name == "Pc":
+			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+			if archivePcView == false:
+				$Camera3D/Control/Pc.visible = true
+				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+				archivePcView = true
+						
+		if collider.name == "KeyCardWindowsRoom" and collider.visible == true:
+			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+			windowsRoomKeycardInHand = true
+			collider.visible = false
+				
+		if collider.name == "DoorForWindows":
+			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+			if  windowsRoomKeycardInHand == true:
+				openedWindowsRoom = true
+				emit_signal("openWindowRoomDoor")
+				windowsRoomKeycardInHand = false
+		if collider.is_in_group("metal_doors"):
+			collider._openClose()
+		match(collider.name):
+			"WinDown1":
+				_placing_barricades(0,collider)
+			"WinDown2":
+				_placing_barricades(1,collider)
+			"WinDown3":
+				_placing_barricades(2,collider)
+			"WinDown4":
+				_placing_barricades(3,collider)
+			"WinDown5":
+				_placing_barricades(4,collider)
+			"WinDown6":
+				_placing_barricades(5,collider)
+			"WinDown7":
+				_placing_barricades(6,collider)
+		if collider.is_in_group("rechargers"):
+			if collider.batteryState() == 2:
+				for i in range(flashBatteries.size()):
+					if flashBatteries[i] == 0 and collider.batteryState() == 2:
+						flashBatteries[i] = 2
+						collider.takeChargedBattery()
+						update_items()
+						break
+			for i in range(flashBatteries.size()):
+				if flashBatteries[i] == 1 and collider.batteryState() == 0:
+					flashBatteries[i] = 0
+					collider.startCharging()
+					update_items()
+		if collider.name == "ViewCam":
+				emit_signal("viewcam")
+				camuse = true
+				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+
+func _input(event):
+	if event.is_action_pressed("lclick"):
+		on_leftClick()
+
+
 func _unhandled_input(event):
-	if event is InputEventMouseMotion and camuse == false:
+	if event is InputEventMouseMotion and camuse == false and enteringPin == false and archivePcView == false:
 		self.rotate_y(-event.relative.x * 0.01)
 		if $Camera3D.rotation.x > 1.5 and -event.relative.y < 0 :
 			$Camera3D.rotate_x(-event.relative.y * 0.005)
@@ -208,66 +378,8 @@ func _physics_process(delta):
 		itemarr[itemsel] = 0
 		update_items()
 	 
-	collider = $Camera3D/RayCast3D.get_collider()
-	$Camera3D/Control/Point.modulate = Color(1,1,1,0.3)
-	if $Camera3D/RayCast3D.is_colliding():
-		if collider.name == "Cam":
-			#print("Cam")
-			pass
-		if collider.name == "WinDown1":
-			#print("WinDown1")
-			pass
-
-	if $Camera3D/RayCast3D.is_colliding():
-		if collider.is_in_group("metal_doors") and Input.is_action_just_pressed("lclick"):
-			collider._openClose()
 			
-	if $Camera3D/RayCast3D.is_colliding():
-		if collider.name == "ButtonMonsterRefresh" and Input.is_action_just_pressed("lclick"):
-			emit_signal("refreshLocationLabel")
 
-		if collider.name == "Cam" and placecam == false:
-			if collider.visible == true:
-				$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-				if Input.is_action_pressed("lclick"):
-					if itemsel !=0:
-						itemarr[itemsel] = 1
-					update_items()
-
-		if collider.name == "PickUpBar":
-			if collider.visible == true:
-				$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-				if Input.is_action_pressed("lclick"):
-					if itemsel !=0:
-						itemarr[itemsel] = 2
-						collider.visible = false
-					update_items()
-					
-		if collider.name == "Benzin":
-			if collider.visible == true:
-				$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-				if Input.is_action_pressed("lclick"):
-					if itemsel !=0:
-						itemarr[itemsel] = 3
-						collider.visible = false
-					update_items()
-					
-					
-		if collider.name == "Generator":
-			if collider.visible == true:
-				$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-				if Input.is_action_pressed("lclick") and itemsel !=0:
-						if itemarr[itemsel] == 3:
-							itemarr[itemsel] = 0
-							generatorFull = true
-							update_items()
-							
-		if collider.name == "ObnoveniDetekce":
-			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-			if Input.is_action_pressed("lclick") and generatorFull:
-						alarmFixed = true
-						update_items()
-						$ManagmentSystem/DetectionSystem.visible = true
 #		match(collider.name):
 #			"Bordel1":
 #				if collider.visible == true:
@@ -323,54 +435,6 @@ func _physics_process(delta):
 
 
 
-		match(collider.name):
-			"WinDown1":
-				_placing_barricades(0,collider)
-			"WinDown2":
-				_placing_barricades(1,collider)
-			"WinDown3":
-				_placing_barricades(2,collider)
-			"WinDown4":
-				_placing_barricades(3,collider)
-			"WinDown5":
-				_placing_barricades(4,collider)
-			"WinDown6":
-				_placing_barricades(5,collider)
-			"WinDown7":
-				_placing_barricades(6,collider)
-
-		if collider.name == "BatteryRecharger":
-			var charging_node = collider.get_node("Charging")
-			var noBat_node = collider.get_node("NoBattery")
-			var charge_node = collider.get_node("Charged")
-			if Input.is_action_pressed("lclick"):
-				if batteryChargers[0] == 2:
-					for i in range(flashBatteries.size()):
-						if flashBatteries[i] == 0:
-							flashBatteries[i] = 2
-							batteryChargers[0] = 0
-							noBat_node.visible = true
-							charge_node.visible = false
-							charging_node.visible = false
-							update_items()
-				for i in range(flashBatteries.size()):
-					if flashBatteries[i] == 1 and batteryChargers[0] == 0:
-						flashBatteries[i] = 0
-						batteryChargers[0] = 1
-						noBat_node.visible = false
-						charge_node.visible = false
-						charging_node.visible = true
-						$BatteryCharger1.start()
-						update_items()
-
-
-
-		if collider.name == "ViewCam":
-			if Input.is_action_pressed("lclick"):
-				emit_signal("viewcam")
-				camuse = true
-				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
 
 	
 	if not is_on_floor():
@@ -379,6 +443,10 @@ func _physics_process(delta):
 		$ManagmentSystem.visible = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		camuse = false
+		enteringPin = false
+		archivePcView = false
+		$Camera3D/Control/PinCode.visible = false
+		$Camera3D/Control/Pc.visible = false
 		#camuse = false
 		#$Camera3D.make_current()
 		#$Camera3D/Control/EscapeLabel.visible = false
@@ -389,7 +457,11 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("a", "d", "w", "s")
+	var input_dir = Vector2(0,0)
+	if enteringPin == false and archivePcView == false:
+		input_dir = Input.get_vector("a", "d", "w", "s")
+	else:
+		input_dir = Vector2(0,0)
 
 	if input_dir != Vector2(0,0) and $step1.playing == false and $step2.playing == false and $step3.playing == false:
 		$step1.playing = true
@@ -474,3 +546,23 @@ func _on_audio_stream_player_3_finished() -> void:
 
 func _on_battery_charger_1_timeout() -> void:
 	batteryChargers[0] = 2
+
+
+func _on_timer_timeout() -> void:
+	print("hour")
+	print(hour)
+	if hour < 10:
+		hour = hour + 1
+	else:
+		if FileAccess.file_exists(save_path) == true:
+			var file = FileAccess.open(save_path, FileAccess.WRITE)
+			data["noc"] = noc 
+			data["windowRoomState"] = openedWindowsRoom 
+			data["alarmRoomState"] = alarmFixed 
+			data["lureRoomState"] = lureFixed 
+			if openedWindowsRoom == false:
+				data["stavOken"] = SimpletonScript.stavOken 
+			else:
+				data["stavOken"] = [1,1,1,1,1,1,1]
+			file.store_var(data)
+			get_tree().change_scene_to_file("res://Menu.tscn")

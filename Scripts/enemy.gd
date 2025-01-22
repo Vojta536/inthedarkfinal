@@ -234,23 +234,38 @@ func _near_window(WindowID):
 		if SimpletonScript.stavOken[WindowID] == 1 or SimpletonScript.stavBarikad[WindowID] == 1 and isFlashed == false:
 			if SimpletonScript.stavOken[WindowID] == 1:
 				SimpletonScript.stavOken[WindowID] = 0
+				match(WindowID):
+					0:
+						emit_signal("udelatBordel1")
+					1:
+						emit_signal("udelatBordel2")
+					2:
+						emit_signal("udelatBordel3")
+					3:
+						emit_signal("udelatBordel4")
+					4:
+						emit_signal("udelatBordel5")
+					5:
+						emit_signal("udelatBordel6")
+					6:
+						emit_signal("udelatBordel7")
 			if SimpletonScript.stavBarikad[WindowID] == 1:
 				SimpletonScript.stavBarikad[WindowID] = 0
-			match(WindowID):
-				0:
-					emit_signal("udelatBordel1")
-				1:
-					emit_signal("udelatBordel2")
-				2:
-					emit_signal("udelatBordel3")
-				3:
-					emit_signal("udelatBordel4")
-				4:
-					emit_signal("udelatBordel5")
-				5:
-					emit_signal("udelatBordel6")
-				6:
-					emit_signal("udelatBordel7")
+				match(WindowID):
+					0:
+						emit_signal("udelatBordel1")
+					1:
+						emit_signal("udelatBordel2")
+					2:
+						emit_signal("udelatBordel3")
+					3:
+						emit_signal("udelatBordel4")
+					4:
+						emit_signal("udelatBordel5")
+					5:
+						emit_signal("udelatBordel6")
+					6:
+						emit_signal("udelatBordel7")
 		isFlashed = false
 		next_destination()
 		print("next_des")

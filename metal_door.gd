@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 func _openClose():
 	if open == false:
 		open = true
-		self.rotation.y = -105.5
+		self.rotation.y = deg_to_rad(120)
 
 	else:
 		open = false
