@@ -88,6 +88,36 @@ signal udelatBordel5
 signal udelatBordel6
 signal udelatBordel7
 
+var save_path = "user://variable.save"
+var noc = 1
+
+var data = {
+			"noc": noc,
+			"windowRoomState": false,
+			"alarmRoomState": false,
+			"lureRoomState": false,
+			"stavOken": [1,1,1,1,1,1,1]
+		}
+		
+
+
+func _ready():
+	if FileAccess.file_exists(save_path) == true:
+		var file = FileAccess.open(save_path,FileAccess.READ)
+		data = file.get_var()
+		noc = data["noc"] 
+	match(noc):
+		1:
+			$MonsterRoamStep.start(10)
+		2:
+			$MonsterRoamStep.start(8)
+		3:
+			$MonsterRoamStep.start(6)
+		4:
+			$MonsterRoamStep.start(5)
+		5:
+			$MonsterRoamStep.start(3)
+
 
 @onready var nav_agent = $NavigationAgent3D
 var SPEED = 5

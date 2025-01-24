@@ -44,4 +44,12 @@ func _on_continue_pressed():
 
 
 func _on_new_game_pressed() -> void:
-	pass # Replace with function body.
+	if FileAccess.file_exists(save_path) == true:
+		var file = FileAccess.open(save_path, FileAccess.WRITE)
+		data["noc"] = 1
+		data["windowRoomState"] = false
+		data["alarmRoomState"] = false
+		data["lureRoomState"] = false
+		data["stavOken"] = [1,1,1,1,1,1,1]
+		file.store_var(data)
+		get_tree().change_scene_to_file("res://Scenes/MainScene.tscn")

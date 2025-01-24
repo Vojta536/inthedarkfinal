@@ -78,6 +78,7 @@ var data = {
 
 signal setWindowModels
 
+signal openLabDoor
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
@@ -99,6 +100,8 @@ func _ready():
 		if alarmFixed == true:
 			$ManagmentSystem/DetectionSystem.visible = true
 		emit_signal("setWindowModels")
+		if noc > 1:
+			emit_signal("openLabDoor")
 	
 	
 func get_ray_location():
@@ -191,6 +194,14 @@ func on_leftClick():
 				openedWindowsRoom = true
 				emit_signal("openWindowRoomDoor")
 				windowsRoomKeycardInHand = false
+				
+		if collider.name == "NoteOne":
+			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+			archivePcView = true
+			#nechce se mi delat nova promena, tohle poslouzi pro muj ucel
+			$Camera3D/Control/Notes.visible = true
+			$Camera3D/Control/Notes/Label.text = "Need something, William? Too bad :) Cant even remember how old I am, huh? Maybe this will refresh your memory."
+				
 		if collider.is_in_group("metal_doors"):
 			collider._openClose()
 		match(collider.name):
@@ -447,6 +458,7 @@ func _physics_process(delta):
 		archivePcView = false
 		$Camera3D/Control/PinCode.visible = false
 		$Camera3D/Control/Pc.visible = false
+		$Camera3D/Control/Notes.visible = false
 		#camuse = false
 		#$Camera3D.make_current()
 		#$Camera3D/Control/EscapeLabel.visible = false
@@ -551,12 +563,14 @@ func _on_battery_charger_1_timeout() -> void:
 func _on_timer_timeout() -> void:
 	print("hour")
 	print(hour)
+	if noc == 1 and hour == 2:
+		emit_signal("openLabDoor")
 	if hour < 10:
 		hour = hour + 1
 	else:
 		if FileAccess.file_exists(save_path) == true:
 			var file = FileAccess.open(save_path, FileAccess.WRITE)
-			data["noc"] = noc 
+			data["noc"] = noc + 1
 			data["windowRoomState"] = openedWindowsRoom 
 			data["alarmRoomState"] = alarmFixed 
 			data["lureRoomState"] = lureFixed 

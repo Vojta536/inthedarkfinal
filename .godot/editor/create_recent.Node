@@ -1,11 +1,11 @@
-Area3D
-Label
-Timer
 CollisionShape3D
 MeshInstance3D
+Area3D
+Label
+Node2D
+Timer
 LineEdit
 RichTextLabel
-Node2D
 Control
 Button
 StaticBody3D
