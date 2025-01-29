@@ -11,6 +11,7 @@ func _process(delta: float) -> void:
 	pass
 
 func _openClose():
+	$AudioStreamPlayer3D.playing = true
 	if open == false:
 		open = true
 		self.rotation.y = deg_to_rad(120)

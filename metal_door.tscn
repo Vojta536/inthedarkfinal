@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=4 uid="uid://q4xivaydhlfw"]
+[gd_scene load_steps=8 format=4 uid="uid://q4xivaydhlfw"]
 
 [ext_resource type="Script" path="res://metal_door.gd" id="1_ys33q"]
+[ext_resource type="AudioStream" uid="uid://4thesbpwgoxw" path="res://audio/door.mp3" id="3_qyuc0"]
 [ext_resource type="Material" uid="uid://7wm17dfb7gcw" path="res://metaldoor.tres" id="6_vsljt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkoed"]
@@ -71,10 +72,13 @@ size = Vector3(0.226501, 3.2007, 1.31201)
 script = ExtResource("1_ys33q")
 
 [node name="Door" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.5889, 0, 0, 0, 0.8, 0, 0, 0, 0.66921, 0, 0.814259, -0.672324)
+transform = Transform3D(1.5889, 0, 0, 0, 0.8, 0, 0, 0, 0.66921, 0, 0.814259, -0.683621)
 mesh = SubResource("ArrayMesh_tkqva")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.019989, 1.62259, -0.677939)
 shape = SubResource("BoxShape3D_opu3b")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_qyuc0")

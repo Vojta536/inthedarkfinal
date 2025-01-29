@@ -108,7 +108,7 @@ func _ready():
 		noc = data["noc"] 
 	match(noc):
 		1:
-			$MonsterRoamStep.start(10)
+			$MonsterRoamStep.start(1)
 		2:
 			$MonsterRoamStep.start(8)
 		3:
@@ -257,11 +257,11 @@ func _on_start_timer_timeout():
 	#$Model/AnimationPlayer.play("walk")
 
 func _near_window(WindowID):
-	if SimpletonScript.stavBarikad[WindowID] == 0 and SimpletonScript.stavOken[WindowID] == 0 and isFlashed == false:
+	if (SimpletonScript.stavBarikad[WindowID] == 0 and SimpletonScript.stavOken[WindowID] == 0) and isFlashed == false:
 		self.position = _tel_location_match(WindowID)
 		PlayerHunt = true
 	else:
-		if SimpletonScript.stavOken[WindowID] == 1 or SimpletonScript.stavBarikad[WindowID] == 1 and isFlashed == false:
+		if (SimpletonScript.stavOken[WindowID] == 1 or SimpletonScript.stavBarikad[WindowID] == 1) and isFlashed == false:
 			if SimpletonScript.stavOken[WindowID] == 1:
 				SimpletonScript.stavOken[WindowID] = 0
 				match(WindowID):

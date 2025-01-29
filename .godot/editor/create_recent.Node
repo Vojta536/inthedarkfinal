@@ -1,4 +1,10 @@
+Node3D
 CollisionShape3D
+StaticBody3D
+SpotLight3D
+Camera3D
+WorldEnvironment
+AudioStreamPlayer3D
 MeshInstance3D
 Area3D
 Label
@@ -6,8 +12,3 @@ Node2D
 Timer
 LineEdit
 RichTextLabel
-Control
-Button
-StaticBody3D
-Node3D
-AudioStreamPlayer3D

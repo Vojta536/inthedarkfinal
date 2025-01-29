@@ -339,6 +339,7 @@ func update_items():
 			$Camera3D/Control/FlashBatterySprite4.modulate = Color(1,1,1,1)
 
 func _physics_process(delta):
+	$Camera3D/Control/Point.modulate = Color(1,1,1,0.2)
 	if Input.is_action_just_pressed("q"):
 		for i in range(flashBatteries.size()):
 			if flashBatteries[i] == 2:
@@ -464,8 +465,7 @@ func _physics_process(delta):
 		#$Camera3D/Control/EscapeLabel.visible = false
 		#$Camera3D/Control/Bila.visible = false
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor() and camuse == false:
-		velocity.y = JUMP_VELOCITY
+
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
