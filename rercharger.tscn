@@ -136,7 +136,7 @@ metallic_texture = ExtResource("4_1fitw")
 roughness_texture = ExtResource("5_p04rf")
 uv1_scale = Vector3(5, 5, 5)
 
-[node name="Rercharger" type="Area3D" groups=["rechargers"]]
+[node name="Rercharger" type="Area3D" groups=["interactable", "rechargers"]]
 script = ExtResource("1_fe4eg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -160,7 +160,7 @@ mesh = SubResource("SphereMesh_an458")
 surface_material_override/0 = SubResource("StandardMaterial3D_3fpun")
 
 [node name="ChargingTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 30.0
 one_shot = true
 
 [node name="Cube" type="MeshInstance3D" parent="."]

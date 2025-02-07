@@ -147,8 +147,14 @@ func _on_player_set_win_7_visible() -> void:
 
 
 func _on_player_refresh_location_label() -> void:
-	$ControlPanel/MonsterLocationLabel.text = str(SimpletonScript.MonsterLoc[0]) +":"+ str(SimpletonScript.MonsterLoc[1])
-
+	var xCord = SimpletonScript.MonsterLoc[0]
+	var yCord = SimpletonScript.MonsterLoc[1]
+	if SimpletonScript.radarRepaired == false:
+		var reportedX = xCord - 1 + randi()%3
+		var reportedY = yCord - 1 + randi()%3
+		$ControlPanel/MonsterLocationLabel.text =  str(reportedX - 1) +" to " + str(reportedX + 1) +" : "+ str(reportedY - 1) +" to " + str(reportedY + 1)
+	else:
+		$ControlPanel/MonsterLocationLabel.text = str(xCord) + " : " + str(yCord)
 
 func _on_player_set_window_models() -> void:
 	if SimpletonScript.stavOken[0] == 0:
@@ -172,3 +178,8 @@ func _on_player_set_window_models() -> void:
 	if SimpletonScript.stavOken[6] == 0:
 		$OknaMeshes/OknoVlevoDole/MeshInstance3D.visible = false
 		$OknaMeshes/OknoVlevoDole/BrokenOkno.visible = true
+
+
+func _on_sudoku_puzzle_sudoku_solved() -> void:
+	$AccRadarPuzzle/PcPropRed.visible = false
+	$AccRadarPuzzle/PcPropGreen.visible = true

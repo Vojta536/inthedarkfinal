@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 var enemyInView = false
 
-const SPEED = 25
+const SPEED = 4
 const JUMP_VELOCITY = 4.5
 var itemarr = [0,0,0,0]
 var itemsel = 0
@@ -30,7 +30,7 @@ signal setWin7Visible
 var hour = 0
 
 
-
+var SudokuView = false
 
 
 
@@ -73,7 +73,8 @@ var data = {
 			"windowRoomState": openedWindowsRoom,
 			"alarmRoomState": alarmFixed,
 			"lureRoomState": lureFixed,
-			"stavOken": [1,1,1,1,1,1,1]
+			"stavOken": [1,1,1,1,1,1,1],
+			"RadarState" : SimpletonScript.radarRepaired
 		}
 
 signal setWindowModels
@@ -95,6 +96,7 @@ func _ready():
 		alarmFixed = data["alarmRoomState"] 
 		lureFixed = data["lureRoomState"]
 		SimpletonScript.stavOken = data["stavOken"]
+		SimpletonScript.radarRepaired = data["RadarState"] 
 		if lureFixed == true:
 			$ManagmentSystem/SoundSystem.visible = true
 		if alarmFixed == true:
@@ -156,14 +158,23 @@ func on_leftClick():
 							itemarr[itemsel] = 0
 							generatorFull = true
 							update_items()
+				else:
+					$TipTimeOut.start()
+					$Camera3D/Control/Tips.visible = true
+					$Camera3D/Control/Tips.text = "I need some fuel."
 							
 		if collider.name == "ObnoveniDetekce":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			if generatorFull:
 				alarmFixed = true
 				update_items()
+				collider.get_node("PcPropRed").visible = false
+				collider.get_node("PcPropGreen").visible = true
 				$ManagmentSystem/DetectionSystem.visible = true
-						
+			else:
+				$TipTimeOut.start()
+				$Camera3D/Control/Tips.visible = true
+				$Camera3D/Control/Tips.text = "I should get the generator running first."
 		if collider.name == "PinCode":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			$Camera3D/Control/PinCode.visible = true
@@ -175,32 +186,48 @@ func on_leftClick():
 			if generatorFull:
 						$ManagmentSystem/SoundSystem.visible = true
 						lureFixed = true
-						
+						collider.get_node("PcPropRed").visible = false
+						collider.get_node("PcPropGreen").visible = true
 		if collider.name == "Pc":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			if archivePcView == false:
 				$Camera3D/Control/Pc.visible = true
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 				archivePcView = true
+				
+		if collider.name == "AccRadarPuzzle":
+			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+			if archivePcView == false:
+				$Camera3D/Control/SudokuPuzzle.visible = true
+				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+				SudokuView = true
 						
 		if collider.name == "KeyCardWindowsRoom" and collider.visible == true:
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			windowsRoomKeycardInHand = true
 			collider.visible = false
-				
+			
+			
 		if collider.name == "DoorForWindows":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			if  windowsRoomKeycardInHand == true:
 				openedWindowsRoom = true
 				emit_signal("openWindowRoomDoor")
 				windowsRoomKeycardInHand = false
+				$TipTimeOut.start()
+				$Camera3D/Control/Tips.visible = true
+				$Camera3D/Control/Tips.text = "I can repair the windows now, when the night ends."
+			else:
+				$TipTimeOut.start()
+				$Camera3D/Control/Tips.visible = true
+				$Camera3D/Control/Tips.text = "A keycard would be nice."
 				
 		if collider.name == "NoteOne":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			archivePcView = true
 			#nechce se mi delat nova promena, tohle poslouzi pro muj ucel
 			$Camera3D/Control/Notes.visible = true
-			$Camera3D/Control/Notes/Label.text = "Need something, William? Too bad :) Cant even remember how old I am, huh? Maybe this will refresh your memory."
+			$Camera3D/Control/Notes/Label.text = "Need something, William? That is too bad :) Cant even remember how old I am, huh? Maybe this will refresh your memory."
 				
 		if collider.is_in_group("metal_doors"):
 			collider._openClose()
@@ -227,11 +254,12 @@ func on_leftClick():
 						collider.takeChargedBattery()
 						update_items()
 						break
-			for i in range(flashBatteries.size()):
-				if flashBatteries[i] == 1 and collider.batteryState() == 0:
-					flashBatteries[i] = 0
-					collider.startCharging()
-					update_items()
+			else:
+				for i in range(flashBatteries.size()):
+					if flashBatteries[i] == 1 and collider.batteryState() == 0:
+						flashBatteries[i] = 0
+						collider.startCharging()
+						update_items()
 		if collider.name == "ViewCam":
 				emit_signal("viewcam")
 				camuse = true
@@ -244,7 +272,7 @@ func _input(event):
 
 
 func _unhandled_input(event):
-	if event is InputEventMouseMotion and camuse == false and enteringPin == false and archivePcView == false:
+	if event is InputEventMouseMotion and camuse == false and enteringPin == false and archivePcView == false and SudokuView == false:
 		self.rotate_y(-event.relative.x * 0.01)
 		if $Camera3D.rotation.x > 1.5 and -event.relative.y < 0 :
 			$Camera3D.rotate_x(-event.relative.y * 0.005)
@@ -356,10 +384,13 @@ func _physics_process(delta):
 		update_items()
 		LightVisible = false
 	
-	if $Camera3D/SpotLight3D.light_energy > 1:
+	if $Camera3D/SpotLight3D.light_energy > 0.3:
 		$Camera3D/SpotLight3D.light_energy -= 0.05 
 	
-
+	collider = $Camera3D/RayCast3D.get_collider()
+	if $Camera3D/RayCast3D.is_colliding():
+		if collider.is_in_group("interactable"):
+			$Camera3D/Control/Point.modulate = Color(1,1,1,0.8)
 	
 
 	
@@ -457,9 +488,11 @@ func _physics_process(delta):
 		camuse = false
 		enteringPin = false
 		archivePcView = false
+		SudokuView = false
 		$Camera3D/Control/PinCode.visible = false
 		$Camera3D/Control/Pc.visible = false
 		$Camera3D/Control/Notes.visible = false
+		$Camera3D/Control/SudokuPuzzle.visible = false
 		#camuse = false
 		#$Camera3D.make_current()
 		#$Camera3D/Control/EscapeLabel.visible = false
@@ -470,7 +503,7 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Vector2(0,0)
-	if enteringPin == false and archivePcView == false:
+	if enteringPin == false and archivePcView == false and SudokuView == false:
 		input_dir = Input.get_vector("a", "d", "w", "s")
 	else:
 		input_dir = Vector2(0,0)
@@ -563,7 +596,7 @@ func _on_battery_charger_1_timeout() -> void:
 func _on_timer_timeout() -> void:
 	print("hour")
 	print(hour)
-	if noc == 1 and hour == 2:
+	if noc == 1 and hour == 1:
 		emit_signal("openLabDoor")
 	if hour < 10:
 		hour = hour + 1
@@ -574,9 +607,18 @@ func _on_timer_timeout() -> void:
 			data["windowRoomState"] = openedWindowsRoom 
 			data["alarmRoomState"] = alarmFixed 
 			data["lureRoomState"] = lureFixed 
+			data["RadarState"] = SimpletonScript.radarRepaired
 			if openedWindowsRoom == false:
 				data["stavOken"] = SimpletonScript.stavOken 
 			else:
 				data["stavOken"] = [1,1,1,1,1,1,1]
 			file.store_var(data)
 			get_tree().change_scene_to_file("res://Menu.tscn")
+
+
+func _on_tip_time_out_timeout() -> void:
+	$Camera3D/Control/Tips.visible = false
+
+
+func _on_sudoku_puzzle_sudoku_solved() -> void:
+	SimpletonScript.radarRepaired = true

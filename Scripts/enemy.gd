@@ -10,6 +10,9 @@ static var oknoVzaduDole2 = Vector3(7.24,1.8,10.652)
 static var oknoVlevoDole2 = Vector3(10.85,1.8,5.005)
 static var oknoVlevoDole = Vector3(10.85,1.8,-4.8)
 
+var firstNight = false
+var waiting = false
+
 func _window_location_match(WindowID):
 	match WindowID:
 		0:
@@ -96,7 +99,8 @@ var data = {
 			"windowRoomState": false,
 			"alarmRoomState": false,
 			"lureRoomState": false,
-			"stavOken": [1,1,1,1,1,1,1]
+			"stavOken": [1,1,1,1,1,1,1],
+			"RadarState" : SimpletonScript.radarRepaired
 		}
 		
 
@@ -109,6 +113,7 @@ func _ready():
 	match(noc):
 		1:
 			$MonsterRoamStep.start(1)
+			firstNight = true
 		2:
 			$MonsterRoamStep.start(8)
 		3:
@@ -199,8 +204,11 @@ func next_destination():
 		roaming = true
 		for i in range(nextCheck.size()):
 			nextCheck[i] = 0
-		
-		$MonsterRoamStep.start()
+		if firstNight == true:
+			$MonsterRoamStep.start(10)
+			firstNight = false
+		else:
+			$MonsterRoamStep.start()
 		isFlashed = false
 		reachedWinndow = false
 		nextDesIsWindow = false
@@ -211,6 +219,8 @@ func next_destination():
 
 
 func _physics_process(delta):
+	if roaming == false  and waiting == false and $step1.playing == false and $step2.playing == false and $step3.playing == false:
+		$step1.playing = true
 	if reachedWinndow and SimpletonScript.playernoise > 40 and agression <1:
 		agression = 1
 		$AnnoyedGrowl.playing = true
@@ -246,6 +256,7 @@ func _on_navigation_agent_3d_navigation_finished():
 	if nextDesIsWindow and PlayerHunt == false:
 		reachedWinndow = true
 		$WaitNearWindow.start()
+		waiting = true
 	elif roaming == false and PlayerHunt == false:
 		next_destination()
 
@@ -305,7 +316,7 @@ func _on_wait_near_window_timeout():
 		_near_window(nextDesOkno)
 	else:
 		next_destination()
-		
+	waiting = false
 
 
 func _on_player_flash_enemy():
@@ -356,6 +367,7 @@ func _on_monster_roam_step_timeout() -> void:
 			$MonsterRoamStep.stop()
 			next_destination()
 			$Model/AnimationPlayer.play("walk")
+			$ModelNew/AnimationPlayer.play("walk")
 
 
 func _on_button_front_pressed() -> void:
@@ -372,3 +384,27 @@ func _on_button_back_pressed() -> void:
 
 func _on_button_rightd_pressed() -> void:
 	distraction = 4
+
+
+func _on_step_1_finished() -> void:
+	if roaming == false and waiting == false:
+		if randi() % 2 == 0:
+			$step3.playing = true
+		else:
+			$step2.playing = true
+
+
+func _on_step_2_finished() -> void:
+	if roaming == false and waiting == false:
+		if randi() % 2 == 0:
+			$step1.playing = true
+		else:
+			$step3.playing = true
+
+
+func _on_step_3_finished() -> void:
+	if roaming == false and waiting == false:
+		if randi() % 2 == 0:
+			$step1.playing = true
+		else:
+			$step2.playing = true

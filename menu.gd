@@ -9,7 +9,8 @@ var data = {
 			"windowRoomState": windowRoom,
 			"alarmRoomState": alarmRoom ,
 			"lureRoomState": lureRoom,
-			"stavOken": [1,1,1,1,1,1,1]
+			"stavOken": [1,1,1,1,1,1,1],
+			"RadarState" : false
 		}
 
 var save_path = "user://variable.save"
@@ -51,5 +52,6 @@ func _on_new_game_pressed() -> void:
 		data["alarmRoomState"] = false
 		data["lureRoomState"] = false
 		data["stavOken"] = [1,1,1,1,1,1,1]
+		data["RadarState"] = false
 		file.store_var(data)
 		get_tree().change_scene_to_file("res://Scenes/MainScene.tscn")

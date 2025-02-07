@@ -4,7 +4,7 @@ var playernoise = 0
 var stavOken = [1,1,1,1,1,1,1]
 var stavBarikad = [0,0,0,0,0,0,0]
 
-
+var radarRepaired = false
 
 
 var alarmFixed = false

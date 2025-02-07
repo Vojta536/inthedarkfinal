@@ -68,7 +68,7 @@ shadow_mesh = SubResource("ArrayMesh_l3sf2")
 [sub_resource type="BoxShape3D" id="BoxShape3D_opu3b"]
 size = Vector3(0.226501, 3.2007, 1.31201)
 
-[node name="metalDoor" type="StaticBody3D" groups=["metal_doors"]]
+[node name="metalDoor" type="StaticBody3D" groups=["interactable", "metal_doors"]]
 script = ExtResource("1_ys33q")
 
 [node name="Door" type="MeshInstance3D" parent="."]
