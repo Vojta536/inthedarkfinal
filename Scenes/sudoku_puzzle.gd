@@ -64,7 +64,7 @@ func updateGui():
 	var check1 = true
 	for i in range(values.size()):
 		for z in range(values.size()):
-			if values[i] == values[z]:
+			if values[i] == values[z] and i != z:
 				check1 = false
 	if check1 == true:
 		$NoRepeatItemsLabel.modulate = Color(0,1,0,1)
@@ -105,7 +105,7 @@ func updateGui():
 		var check = true
 		for i in range(values.size()):
 			for z in range(values.size()):
-				if values[i] == values[z]:
+				if values[i] == values[z] and i != z:
 					check = false
 		if check == true:
 			emit_signal("sudokuSolved")

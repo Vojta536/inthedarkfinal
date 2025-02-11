@@ -18,4 +18,4 @@ func _openClose():
 
 func _on_player_open_window_room_door() -> void:
 	open = true
-	self.rotation.y =  190.5
+	self.rotation.y =  deg_to_rad(190.5)

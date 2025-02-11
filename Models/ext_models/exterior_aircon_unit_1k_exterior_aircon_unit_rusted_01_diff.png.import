@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://3hfem6p3ungb"
+path.s3tc="res://.godot/imported/exterior_aircon_unit_1k_exterior_aircon_unit_rusted_01_diff.png-3267a063324567fa13e41a3451f45f07.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "7a8d5dcf4a0304b0ccbf8d48b47bb74b"
+}
+
+[deps]
+
+source_file="res://Models/ext_models/exterior_aircon_unit_1k_exterior_aircon_unit_rusted_01_diff.png"
+dest_files=["res://.godot/imported/exterior_aircon_unit_1k_exterior_aircon_unit_rusted_01_diff.png-3267a063324567fa13e41a3451f45f07.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

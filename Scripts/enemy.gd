@@ -13,6 +13,8 @@ static var oknoVlevoDole = Vector3(10.85,1.8,-4.8)
 var firstNight = false
 var waiting = false
 
+signal openNightOneDoor
+
 func _window_location_match(WindowID):
 	match WindowID:
 		0:
@@ -114,6 +116,8 @@ func _ready():
 		1:
 			$MonsterRoamStep.start(1)
 			firstNight = true
+			InterestChecksLeft = 1
+			nextCheck = [1,1,1,0,1,1,1]
 		2:
 			$MonsterRoamStep.start(8)
 		3:
@@ -205,8 +209,9 @@ func next_destination():
 		for i in range(nextCheck.size()):
 			nextCheck[i] = 0
 		if firstNight == true:
-			$MonsterRoamStep.start(10)
+			$MonsterRoamStep.start(15)
 			firstNight = false
+			emit_signal("openNightOneDoor")
 		else:
 			$MonsterRoamStep.start()
 		isFlashed = false
@@ -238,7 +243,8 @@ func _physics_process(delta):
 	var new_velocity = (next_location - current_location).normalized() * SPEED
 	velocity = velocity.move_toward(new_velocity,.25)
 	move_and_slide()
-	self.rotation.y = -enemyvec.angle() -1.5
+	if reachedWinndow == false:
+		self.rotation.y = -enemyvec.angle() -1.5
 	
 	
 
@@ -257,6 +263,14 @@ func _on_navigation_agent_3d_navigation_finished():
 		reachedWinndow = true
 		$WaitNearWindow.start()
 		waiting = true
+		if nextDesOkno < 2:
+			self.rotation.y = deg_to_rad(180)
+		elif nextDesOkno < 3:
+			self.rotation.y = deg_to_rad(-90)
+		elif nextDesOkno < 5:
+			self.rotation.y = deg_to_rad(0)
+		elif nextDesOkno < 7:
+			self.rotation.y = deg_to_rad(90)
 	elif roaming == false and PlayerHunt == false:
 		next_destination()
 

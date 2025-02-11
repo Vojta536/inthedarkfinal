@@ -63,6 +63,8 @@ var flashBatteries = [2,2,2,2]
 var batteryChargers = [0,0,0,0]
 #2 - znamena nabite, 1- znamena vybite, 0 znamena neni v inventari
 
+signal openNightOneDoorPl
+
 signal flashEnemy
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -104,6 +106,7 @@ func _ready():
 		emit_signal("setWindowModels")
 		if noc > 1:
 			emit_signal("openLabDoor")
+			emit_signal("openNightOneDoor")
 	
 	
 func get_ray_location():
@@ -596,7 +599,7 @@ func _on_battery_charger_1_timeout() -> void:
 func _on_timer_timeout() -> void:
 	print("hour")
 	print(hour)
-	if noc == 1 and hour == 1:
+	if noc == 1 and hour == 0:
 		emit_signal("openLabDoor")
 	if hour < 10:
 		hour = hour + 1

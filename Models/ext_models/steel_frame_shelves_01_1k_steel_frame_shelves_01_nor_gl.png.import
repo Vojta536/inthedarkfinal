@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://b8aku61okbw88"
+path.s3tc="res://.godot/imported/steel_frame_shelves_01_1k_steel_frame_shelves_01_nor_gl.png-58f31fad8b996941a4ad366826ae67c1.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "dd946234a11ad02917679c7a646f9c4b"
+}
+
+[deps]
+
+source_file="res://Models/ext_models/steel_frame_shelves_01_1k_steel_frame_shelves_01_nor_gl.png"
+dest_files=["res://.godot/imported/steel_frame_shelves_01_1k_steel_frame_shelves_01_nor_gl.png-58f31fad8b996941a4ad366826ae67c1.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=1
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=1
+roughness/src_normal="res://Models/steel_frame_shelves_01_1k_steel_frame_shelves_01_nor_gl.png"
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

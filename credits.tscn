@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://g1f4qkyh0h0i"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Credits" type="Label" parent="."]
+offset_left = 45.0
+offset_top = 36.0
+offset_right = 1174.0
+offset_bottom = 59.0
+text = "\"Keyboard\" (https://skfb.ly/6uLXr) by oscarherry3d is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+"
