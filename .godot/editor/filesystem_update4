@@ -1,0 +1,10 @@
+res://Scenes/MainScene.tscn
+res://Scripts/Window.gdshader
+res://papir.tres
+res://Scenes/shinierMetal.tres
+res://Scenes/carboard.tres
+res://Menu.tscn
+res://metal_door.tscn
+res://rercharger.tscn
+res://credits.tscn
+res://Scenes/lab_doors.gd

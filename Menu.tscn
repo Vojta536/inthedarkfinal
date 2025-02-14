@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://qj88f0vwv6dp"]
+[gd_scene load_steps=36 format=4 uid="uid://qj88f0vwv6dp"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_afmc7"]
 [ext_resource type="Script" path="res://MainMenu.gd" id="2_elki2"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://c0ttbw4tavbdd" path="res://Textures/Planks037A_1K-PNG/Planks037A_1K-PNG_Displacement.png" id="11_54xsc"]
 [ext_resource type="Texture2D" uid="uid://ds7do2n8xgsr5" path="res://Textures/Planks037A_1K-PNG/Planks037A_1K-PNG_NormalGL.png" id="12_2shq3"]
 [ext_resource type="Texture2D" uid="uid://dgpkl3j6ha6ht" path="res://Textures/Planks037A_1K-PNG/Planks037A_1K-PNG_Roughness.png" id="13_1655x"]
+[ext_resource type="AudioStream" uid="uid://wqvrus1kpiki" path="res://audio/windy-night-forest-ambience-211715.mp3" id="17_jd3v1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lyfvp"]
 shader = ExtResource("4_ip2oi")
@@ -584,6 +585,10 @@ surface_material_override/0 = SubResource("StandardMaterial3D_2qh8b")
 [node name="SpotLight3D" type="SpotLight3D" parent="House"]
 transform = Transform3D(0.73322, -0.304738, 0.607885, 0, 0.893959, 0.448149, -0.679992, -0.328592, 0.655468, 11.2635, 11.9303, 15.8431)
 spot_range = 56.422
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_jd3v1")
+autoplay = true
 
 [connection signal="pressed" from="Control/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="Control/New Game" to="." method="_on_new_game_pressed"]

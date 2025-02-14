@@ -11,8 +11,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("enter"):
 		searchQuery = $LineEdit.text
-		if searchQuery == "Mike":
-			$RichTextLabel.text = "Age 31 years old. Race - Slavic. Born 1973."
+		if searchQuery.to_lower() in "michael riddings" and searchQuery.length() > 4:
+			$RichTextLabel.text = "Michael Riddings.\nAge 31 years old.\nRace - Slavic.\nBorn 10.4.1973.\nPosition Audio System Engineer. \nFormer robbery convict, indications of lack of empathy."
 		else:
-			$RichTextLabel.text = "Please enter a full name."
+			$RichTextLabel.text = "A match was not found. Please try to make your search query more specific."
 		$LineEdit.text = ""

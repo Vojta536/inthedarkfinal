@@ -15,6 +15,10 @@ var waiting = false
 
 signal openNightOneDoor
 
+signal jumpscare
+
+signal hunt
+
 func _window_location_match(WindowID):
 	match WindowID:
 		0:
@@ -119,13 +123,13 @@ func _ready():
 			InterestChecksLeft = 1
 			nextCheck = [1,1,1,0,1,1,1]
 		2:
-			$MonsterRoamStep.start(8)
+			$MonsterRoamStep.start(15)
 		3:
-			$MonsterRoamStep.start(6)
+			$MonsterRoamStep.start(10)
 		4:
-			$MonsterRoamStep.start(5)
+			$MonsterRoamStep.start(8)
 		5:
-			$MonsterRoamStep.start(3)
+			$MonsterRoamStep.start(6)
 
 
 @onready var nav_agent = $NavigationAgent3D
@@ -209,7 +213,7 @@ func next_destination():
 		for i in range(nextCheck.size()):
 			nextCheck[i] = 0
 		if firstNight == true:
-			$MonsterRoamStep.start(15)
+			$MonsterRoamStep.start(20)
 			firstNight = false
 			emit_signal("openNightOneDoor")
 		else:
@@ -284,6 +288,7 @@ func _on_start_timer_timeout():
 func _near_window(WindowID):
 	if (SimpletonScript.stavBarikad[WindowID] == 0 and SimpletonScript.stavOken[WindowID] == 0) and isFlashed == false:
 		self.position = _tel_location_match(WindowID)
+		emit_signal("hunt")
 		PlayerHunt = true
 	else:
 		if (SimpletonScript.stavOken[WindowID] == 1 or SimpletonScript.stavBarikad[WindowID] == 1) and isFlashed == false:
@@ -342,6 +347,7 @@ func _on_player_flash_enemy():
 
 func _on_jumpscare_detector_area_entered(area: Area3D) -> void:
 	$Jumpscare.playing = true
+	emit_signal("jumpscare")
 
 
 func _on_jumpscare_detector_area_exited(area: Area3D) -> void:

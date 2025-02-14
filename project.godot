@@ -13,6 +13,7 @@ config_version=5
 config/name="InTheDarkFinal"
 run/main_scene="res://Menu.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
+run/max_fps=60
 config/icon="res://Textures/icon.svg"
 
 [autoload]
@@ -109,3 +110,4 @@ enter={
 [rendering]
 
 renderer/rendering_method="mobile"
+occlusion_culling/use_occlusion_culling=true
