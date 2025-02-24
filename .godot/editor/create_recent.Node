@@ -1,15 +1,3 @@
-Sprite3D
-AudioStreamPlayer
-RayCast3D
-MeshInstance3D
-Label
-OccluderInstance3D
-Node3D
-CollisionShape3D
-StaticBody3D
-Button
-Node2D
 AudioStreamPlayer3D
-OmniLight3D
-Area3D
-Timer
+Button
+Control

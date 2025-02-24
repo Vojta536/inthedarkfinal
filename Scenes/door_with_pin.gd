@@ -17,3 +17,4 @@ func _openClose():
 func _on_control_passcode_entered() -> void:
 	open = true
 	self.rotation.y =  190.5
+	$AudioStreamPlayer3D.playing = true

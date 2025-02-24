@@ -9,3 +9,13 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func _on_go_back_pressed() -> void:
+	$BaseUI.visible = true
+	$CreditsScreen.visible = false
+
+
+func _on_credits_pressed() -> void:
+	$BaseUI.visible = false
+	$CreditsScreen.visible = true

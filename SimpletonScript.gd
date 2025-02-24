@@ -13,6 +13,8 @@ var openedWindowsRoom = false
 
 var lureFixed = false
 
+var generatorFull = false
+
 var monsterWall = 0
 
 var MonsterLoc = [0,0]

@@ -11,10 +11,12 @@ config_version=5
 [application]
 
 config/name="InTheDarkFinal"
+config/description="A horror game."
+config/version="1.0"
 run/main_scene="res://Menu.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 run/max_fps=60
-config/icon="res://Textures/icon.svg"
+config/icon="res://Textures/logo2.png"
 
 [autoload]
 
@@ -110,4 +112,5 @@ enter={
 [rendering]
 
 renderer/rendering_method="mobile"
+scaling_3d/scale=0.25
 occlusion_culling/use_occlusion_culling=true

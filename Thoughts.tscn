@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://brijmw52iili3"]
+
+[ext_resource type="Script" path="res://Thoughts.gd" id="1_q50pl"]
+[ext_resource type="Texture2D" uid="uid://c50rigtgj1d4p" path="res://Textures/WhiteSquare.png" id="2_317hi"]
+[ext_resource type="FontFile" uid="uid://beo0c6m8eks8f" path="res://atwriter.ttf" id="3_eydes"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_q50pl")
+
+[node name="WhiteSquare" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(955, 528)
+scale = Vector2(39.64, 22.76)
+texture = ExtResource("2_317hi")
+
+[node name="Title" type="Label" parent="."]
+offset_left = 31.0
+offset_top = 58.0
+offset_right = 1420.0
+offset_bottom = 168.0
+theme_override_fonts/font = ExtResource("3_eydes")
+theme_override_font_sizes/font_size = 80
+text = "The lab is closed on mondays, huh? I should
+take a look there tommorow. Some spare 
+windows would really come in hand. I could 
+repair them during the day."
+
+[node name="Title2" type="Label" parent="."]
+offset_left = 969.0
+offset_top = 966.0
+offset_right = 2358.0
+offset_bottom = 1076.0
+theme_override_fonts/font = ExtResource("3_eydes")
+theme_override_font_sizes/font_size = 80
+text = "Press enter to continue"

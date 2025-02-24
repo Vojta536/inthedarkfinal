@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://civdxe7hcdyw2"
+uid="uid://drp7cvqy5m561"
 path.s3tc="res://.godot/imported/steel_frame_shelves_03_1k_steel_frame_shelves_03_metal-steel_frame_shelves_03_rough.png-34ccf555fda251ff66b116b3b8b4ecf6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "ccc458667a4a2b0b64d8795ef07813de"
 }
 
 [deps]

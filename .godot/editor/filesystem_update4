@@ -1,10 +1,8 @@
-res://Scenes/MainScene.tscn
-res://Scripts/Window.gdshader
-res://papir.tres
-res://Scenes/shinierMetal.tres
-res://Scenes/carboard.tres
 res://Menu.tscn
+res://Scenes/MainScene.tscn
+res://Scenes/doorForWindowsRoom.gd
+res://Scenes/door_into_lab.gd
+res://Scenes/door_night_one.gd
+res://Scenes/door_with_pin.gd
+res://Scripts/player.gd
 res://metal_door.tscn
-res://rercharger.tscn
-res://credits.tscn
-res://Scenes/lab_doors.gd

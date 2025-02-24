@@ -69,7 +69,7 @@ func _tel_location_match(WindowID):
 		_:
 			return Vector3.ZERO
 
-static var theForest = Vector3(-1,0.9,-34)
+static var theForest = Vector3(-71,0.9,-36.4)
 
 var nextCheck = [0,0,0,0,0,0,0]
 var nextDesOkno = 0
@@ -123,13 +123,13 @@ func _ready():
 			InterestChecksLeft = 1
 			nextCheck = [1,1,1,0,1,1,1]
 		2:
-			$MonsterRoamStep.start(15)
+			$MonsterRoamStep.start(20)
 		3:
-			$MonsterRoamStep.start(10)
+			$MonsterRoamStep.start(15)
 		4:
-			$MonsterRoamStep.start(8)
+			$MonsterRoamStep.start(11)
 		5:
-			$MonsterRoamStep.start(6)
+			$MonsterRoamStep.start(8)
 
 
 @onready var nav_agent = $NavigationAgent3D
@@ -213,7 +213,7 @@ func next_destination():
 		for i in range(nextCheck.size()):
 			nextCheck[i] = 0
 		if firstNight == true:
-			$MonsterRoamStep.start(20)
+			$MonsterRoamStep.start(15)
 			firstNight = false
 			emit_signal("openNightOneDoor")
 		else:
@@ -228,7 +228,7 @@ func next_destination():
 
 
 func _physics_process(delta):
-	if roaming == false  and waiting == false and $step1.playing == false and $step2.playing == false and $step3.playing == false:
+	if roaming == false  and waiting == false and $step1.playing == false:
 		$step1.playing = true
 	if reachedWinndow and SimpletonScript.playernoise > 40 and agression <1:
 		agression = 1
@@ -408,23 +408,12 @@ func _on_button_rightd_pressed() -> void:
 
 func _on_step_1_finished() -> void:
 	if roaming == false and waiting == false:
-		if randi() % 2 == 0:
-			$step3.playing = true
-		else:
-			$step2.playing = true
+		$step1.playing = true
 
 
 func _on_step_2_finished() -> void:
-	if roaming == false and waiting == false:
-		if randi() % 2 == 0:
-			$step1.playing = true
-		else:
-			$step3.playing = true
+	pass
 
 
 func _on_step_3_finished() -> void:
-	if roaming == false and waiting == false:
-		if randi() % 2 == 0:
-			$step1.playing = true
-		else:
-			$step2.playing = true
+	pass

@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 var enemyInView = false
 
-const SPEED = 2
+const SPEED = 4
 const JUMP_VELOCITY = 4.5
 var itemarr = [0,0,0,0]
 
@@ -49,17 +49,12 @@ var LightVisible = true
 var enteringPin = false
 
 
-var generatorFull = false
 
-var alarmFixed = false
-
-var archivePcView = false
+var uiView = false
 
 var windowsRoomKeycardInHand = false
 
-var openedWindowsRoom = false
 
-var lureFixed = false
 
 var flashBatteries = [2,2,2,2]
 var batteryChargers = [0,0,0,0]
@@ -68,17 +63,17 @@ var batteryChargers = [0,0,0,0]
 signal openNightOneDoorPl
 
 signal flashEnemy
-# Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var noc = 1
 var data = {
 			"noc": noc,
-			"windowRoomState": openedWindowsRoom,
-			"alarmRoomState": alarmFixed,
-			"lureRoomState": lureFixed,
+			"windowRoomState": SimpletonScript.openedWindowsRoom,
+			"alarmRoomState": SimpletonScript.alarmFixed,
+			"lureRoomState": SimpletonScript.lureFixed,
 			"stavOken": [1,1,1,1,1,1,1],
-			"RadarState" : SimpletonScript.radarRepaired
+			"RadarState" : SimpletonScript.radarRepaired,
+			"GeneratorState": SimpletonScript.generatorFull
 		}
 
 signal setWindowModels
@@ -96,21 +91,25 @@ func _ready():
 		var file = FileAccess.open(save_path,FileAccess.READ)
 		data = file.get_var()
 		noc = data["noc"] 
-		openedWindowsRoom = data["windowRoomState"] 
-		alarmFixed = data["alarmRoomState"] 
-		lureFixed = data["lureRoomState"]
+		SimpletonScript.openedWindowsRoom = data["windowRoomState"] 
+		SimpletonScript.alarmFixed = data["alarmRoomState"] 
+		SimpletonScript.lureFixed = data["lureRoomState"]
 		SimpletonScript.stavOken = data["stavOken"]
 		SimpletonScript.radarRepaired = data["RadarState"] 
-		if lureFixed == true:
+		SimpletonScript.generatorFull = data["GeneratorState"]
+		if SimpletonScript.lureFixed == true:
 			$ManagmentSystem/SoundSystem.visible = true
 			$ManagmentSystem/NoSoundSys.visible = false
-		if alarmFixed == true:
+		if SimpletonScript.alarmFixed == true:
 			$ManagmentSystem/NoDetectionSys.visible = false
 			$ManagmentSystem/DetectionSystem.visible = true
 		emit_signal("setWindowModels")
+	if noc == 1:
+		$Hour.start(20)
 	if noc > 1:
 		emit_signal("openLabDoor")
 		emit_signal("openNightOneDoorPl")
+		
 	
 	
 func get_ray_location():
@@ -154,6 +153,7 @@ func on_leftClick():
 	if $Camera3D/RayCast3D.is_colliding():
 		if collider.name == "ButtonMonsterRefresh":
 			emit_signal("refreshLocationLabel")
+			$Beep.playing = true
 		if collider.name == "Cam" and placecam == false:
 			if collider.visible == true:
 				$Camera3D/Control/Point.modulate = Color(1,1,1,1)
@@ -181,7 +181,8 @@ func on_leftClick():
 				if itemsel !=0:
 						if itemarr[itemsel] == 3:
 							itemarr[itemsel] = 0
-							generatorFull = true
+							SimpletonScript.generatorFull = true
+							collider.get_node("AudioStreamPlayer3D").playing = true
 							update_items()
 				else:
 					$TipTimeOut.start()
@@ -190,8 +191,8 @@ func on_leftClick():
 							
 		if collider.name == "ObnoveniDetekce":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-			if generatorFull:
-				alarmFixed = true
+			if SimpletonScript.generatorFull:
+				SimpletonScript.alarmFixed = true
 				update_items()
 				collider.get_node("PcPropRed").visible = false
 				collider.get_node("PcPropGreen").visible = true
@@ -212,10 +213,10 @@ func on_leftClick():
 				
 		if collider.name == "ObnoveniZvuku":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-			if generatorFull:
+			if SimpletonScript.generatorFull:
 						$ManagmentSystem/SoundSystem.visible = true
 						$ManagmentSystem/NoSoundSys.visible = false
-						lureFixed = true
+						SimpletonScript.lureFixed = true
 						collider.get_node("PcPropRed").visible = false
 						collider.get_node("PcPropGreen").visible = true
 			else:
@@ -224,14 +225,14 @@ func on_leftClick():
 				$Camera3D/Control/Tips.text = "I should get the generator running first."
 		if collider.name == "Pc":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-			if archivePcView == false:
+			if uiView == false:
 				$Camera3D/Control/Pc.visible = true
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-				archivePcView = true
+				uiView = true
 				
 		if collider.name == "AccRadarPuzzle":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-			if archivePcView == false:
+			if uiView == false:
 				$Camera3D/Control/SudokuPuzzle.visible = true
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 				SudokuView = true
@@ -242,17 +243,17 @@ func on_leftClick():
 			collider.visible = false
 			$TipTimeOut.start()
 			$Camera3D/Control/Tips.visible = true
-			$Camera3D/Control/Tips.text = "This could be useful"
+			$Camera3D/Control/Tips.text = "Room 15..."
 			
 		if collider.name == "DoorForWindows":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			if  windowsRoomKeycardInHand == true:
-				openedWindowsRoom = true
+				SimpletonScript.openedWindowsRoom = true
 				emit_signal("openWindowRoomDoor")
 				windowsRoomKeycardInHand = false
 				$TipTimeOut.start()
 				$Camera3D/Control/Tips.visible = true
-				$Camera3D/Control/Tips.text = "Spare windows? Nice."
+				$Camera3D/Control/Tips.text = "Spare windows? Nice. I will use those when the night ends."
 			else:
 				$TipTimeOut.start()
 				$Camera3D/Control/Tips.visible = true
@@ -260,41 +261,44 @@ func on_leftClick():
 				
 		if collider.name == "NoteOne":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-			archivePcView = true
-			#nechce se mi delat nova promena, tohle poslouzi pro muj ucel
+			uiView = true
 			$Camera3D/Control/Notes.visible = true
 			$Camera3D/Control/Notes/Label.text = "I know you've been busy, William. I know you've been stressed. But still, I was hoping you'd remember. Just this one day. Why couldn't you? Do you even remember how old I am, the year I was born in? Do you know how many year's I've been alive on this planet today? Maybe once you do, you can get the stupid Audio system working again. I don't care anymore. I'm going for a walk in the forest, whatever is out there is still better than what's waiting for us at home. I love you, you stupid bastard."
 				
 		if collider.name == "NoteTwo":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-			archivePcView = true
-			#nechce se mi delat nova promena, tohle poslouzi pro muj ucel
+			uiView = true
 			$Camera3D/Control/Notes.visible = true
 			$Camera3D/Control/Notes/Label.text = "H-172 is a large figure without a clear shape nor form, but it's mass tends to resemble that of a human majority of the times. This appearance is unstable, and often changes.  Attempts at capture in the forest have proven unsuccessful. The house on ground level remains mostly untouched, H-172 reacts negatively to any changes. For security reasons, an improvised lab has been constructed in the large basement complex. H-172 is sensitive to high intensity of light. It is not yet understood how, but H-172 can sense when personnel is present in the site, and H-172 will attempt to make it's way inside at any cost. For these reasons, a lure system and a nearby detection system have been constructed. These along with the long distance radar prove sufficient to provide protection. Cameras are not effective. H-172 is aggressive, and not to be interacted with."
 		if collider.name == "NoteThree":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-			archivePcView = true
-			#nechce se mi delat nova promena, tohle poslouzi pro muj ucel
+			uiView = true
 			$Camera3D/Control/Notes.visible = true
-			$Camera3D/Control/Notes/Label.text = "Before anything! Pick up the keycard and open room 15, so you can ge the windows fixed by the end of the night. For the unfortunote soul whose next shift is with this radar: The radar tries to estimate the position of the monster. In case it gets to 6:6, get off your ass and alert someone. That means its here. Its a little innacurace, in case you want to calibrate it, go to room 8. I cannot be bothered."
+			$Camera3D/Control/Notes/Label.text = "Before anything! Pick up the keycard and open room 15, so you can ge the windows fixed by the end of the night. For the unfortunote soul whose next shift is with this radar: The radar tries to estimate the position of the monster. Use the red button to update the screen. The thing should be somewhere in the red squares. In case it gets close to the center, get off your ass and alert someone. That means its here. Its a little innacurate, in case you want to calibrate it, go to room 8. I cannot be bothered."
 		if collider.name == "NoteFour":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-			archivePcView = true
-			#nechce se mi delat nova promena, tohle poslouzi pro muj ucel
+			uiView = true
 			$Camera3D/Control/Notes.visible = true
 			$Camera3D/Control/Notes/Label.text = "I swear, I've seen it. I may be sleep deprived, but there is no way that I'm just seeing things. I saw the camera feed. How did it get inside undetected? How come it didn't kill anyone? And how did it disappear again? Maybe I'm just going crazy, that's what everyone's telling me. That I need to rest. There is no magic, there are no fairy tales. Everything in this world has to abide by the rules universe has set for us, so how did it...I don't want to know anymore."
 		if collider.name == "NoteFive":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-			archivePcView = true
-			#nechce se mi delat nova promena, tohle poslouzi pro muj ucel
+			uiView = true
 			$Camera3D/Control/Notes.visible = true
 			$Camera3D/Control/Notes/Label.text = "I can't stand it here anymore. The other's are scientists, they at least have some ACTUAL reason to be here. But me? I'm just a corrupt politician! Was taking a few birpes really that bad enough to get me sent here? Whenever I ask William if we'll ever be able to go home, he says when we capture that thing. Over my dead body, literally! I've seen 4 teams come and die already, why would this one be any different? I want to die, I want to die, I'd rather rot in jail."
 		if collider.name == "NoteSix":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
-			archivePcView = true
-			#nechce se mi delat nova promena, tohle poslouzi pro muj ucel
+			uiView = true
 			$Camera3D/Control/Notes.visible = true
-			$Camera3D/Control/Notes/Label.text = "Important! In case any staff forgets, the lab gets flooded with gas after 9:00, we cant have any infection spreading like last time. If you are down below when the clock hits 9, you are on your own."
+			$Camera3D/Control/Notes/Label.text = "The lab is closed on mondays. Important! In case any staff forgets, the lab gets flooded with gas after 9:00, we cant have any infection spreading like last time. If you are down below when the clock hits 9, you are on your own."
+		if collider.name == "NoteSeven":
+			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+			uiView = true
+			$Camera3D/Control/Notes.visible = true
+			$Camera3D/Control/Notes/Label.text = "I hate having night shifts up here. I keep seeing that thing in the distance. It is mocking me. And when the night ends, someone will have to repair all the windows. Guess who??? Me. Just superb. Gosh, I should have just stayed in jail. The recharger up here is full, and the rest are in the lab. Amazing."
+		if collider.name == "Mapa":
+			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
+			uiView = true
+			$Camera3D/Control/Mapa.visible = true
 		if collider.is_in_group("metal_doors"):
 			collider._openClose()
 		match(collider.name):
@@ -341,7 +345,7 @@ func _input(event):
 
 
 func _unhandled_input(event):
-	if event is InputEventMouseMotion and camuse == false and enteringPin == false and archivePcView == false and SudokuView == false:
+	if event is InputEventMouseMotion and camuse == false and enteringPin == false and uiView == false and SudokuView == false:
 		self.rotate_y(-event.relative.x * 0.01)
 		if $Camera3D.rotation.x > 1.5 and -event.relative.y < 0 :
 			$Camera3D.rotate_x(-event.relative.y * 0.005)
@@ -359,7 +363,7 @@ func _unhandled_input(event):
 				$Camera3D/Control/ItemBox3.modulate = Color(1,1,1,0.25)
 			else:
 				itemsel = 1
-				$Camera3D/Control/ItemBox1.modulate = Color(1,1,1,0.5)
+				$Camera3D/Control/ItemBox1.modulate = Color(1,1,1,0.8)
 				$Camera3D/Control/ItemBox2.modulate = Color(1,1,1,0.25)
 				$Camera3D/Control/ItemBox3.modulate = Color(1,1,1,0.25)
 		if event.pressed and event.keycode == KEY_2:
@@ -371,7 +375,7 @@ func _unhandled_input(event):
 			else:
 				itemsel = 2
 				$Camera3D/Control/ItemBox1.modulate = Color(1,1,1,0.25)
-				$Camera3D/Control/ItemBox2.modulate = Color(1,1,1,0.5)
+				$Camera3D/Control/ItemBox2.modulate = Color(1,1,1,0.8)
 				$Camera3D/Control/ItemBox3.modulate = Color(1,1,1,0.25)
 		if event.pressed and event.keycode == KEY_3:
 			if itemsel == 3:
@@ -383,7 +387,7 @@ func _unhandled_input(event):
 				itemsel = 3
 				$Camera3D/Control/ItemBox1.modulate = Color(1,1,1,0.25)
 				$Camera3D/Control/ItemBox2.modulate = Color(1,1,1,0.25)
-				$Camera3D/Control/ItemBox3.modulate = Color(1,1,1,0.5)
+				$Camera3D/Control/ItemBox3.modulate = Color(1,1,1,0.8)
 
 
 func update_items():
@@ -560,31 +564,24 @@ func _physics_process(delta):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		camuse = false
 		enteringPin = false
-		archivePcView = false
+		uiView = false
 		SudokuView = false
 		$Camera3D/Control/PinCode.visible = false
 		$Camera3D/Control/Pc.visible = false
 		$Camera3D/Control/Notes.visible = false
 		$Camera3D/Control/SudokuPuzzle.visible = false
+		$Camera3D/Control/Mapa.visible = false
 		#camuse = false
 		#$Camera3D.make_current()
 		#$Camera3D/Control/EscapeLabel.visible = false
 		#$Camera3D/Control/Bila.visible = false
-	# Handle Jump.
-
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Vector2(0,0)
-	if enteringPin == false and archivePcView == false and SudokuView == false:
+	if enteringPin == false and uiView == false and SudokuView == false:
 		input_dir = Input.get_vector("a", "d", "w", "s")
 	else:
 		input_dir = Vector2(0,0)
-
-	if input_dir != Vector2(0,0) and $step1.playing == false and $step2.playing == false and $step3.playing == false:
+	if input_dir != Vector2(0,0) and $step1.playing == false:
 		$step1.playing = true
-
-
 	if camuse == false:
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if direction:
@@ -634,27 +631,15 @@ func _on_enemy_area_area_exited(area):
 
 
 func _on_audio_stream_player_finished() -> void:
-	if Input.get_vector("a", "d", "w", "s") != Vector2(0,0):
-		if randi() % 2 == 0:
-			$step3.playing = true
-		else:
-			$step2.playing = true
+	pass
 
 
 func _on_audio_stream_player_2_finished() -> void:
-	if Input.get_vector("a", "d", "w", "s") != Vector2(0,0):
-		if randi() % 2 == 0:
-			$step1.playing = true
-		else:
-			$step3.playing = true
+	pass
 
 
 func _on_audio_stream_player_3_finished() -> void:
-	if Input.get_vector("a", "d", "w", "s") != Vector2(0,0):
-		if randi() % 2 == 0:
-			$step2.playing = true
-		else:
-			$step1.playing = true
+	pass
 
 
 
@@ -665,8 +650,6 @@ func _on_battery_charger_1_timeout() -> void:
 func _on_timer_timeout() -> void:
 	print("hour")
 	print(hour)
-	if noc == 1 and hour == 0:
-		emit_signal("openLabDoor")
 		
 	if hour < 10:
 		hour = hour + 1
@@ -674,17 +657,24 @@ func _on_timer_timeout() -> void:
 	else:
 		if FileAccess.file_exists(save_path) == true:
 			var file = FileAccess.open(save_path, FileAccess.WRITE)
-			data["noc"] = noc + 1
-			data["windowRoomState"] = openedWindowsRoom 
-			data["alarmRoomState"] = alarmFixed 
-			data["lureRoomState"] = lureFixed 
+			if noc < 5:
+				data["noc"] = noc + 1
+			if noc == 5:
+				data["noc"] = 5
+				noc = 6
+			data["windowRoomState"] = SimpletonScript.openedWindowsRoom 
+			data["alarmRoomState"] = SimpletonScript.alarmFixed 
+			data["lureRoomState"] = SimpletonScript.lureFixed 
 			data["RadarState"] = SimpletonScript.radarRepaired
-			if openedWindowsRoom == false:
+			data["GeneratorState"] = SimpletonScript.generatorFull
+			if SimpletonScript.openedWindowsRoom == false:
 				data["stavOken"] = SimpletonScript.stavOken 
 			else:
 				data["stavOken"] = [1,1,1,1,1,1,1]
 			file.store_var(data)
-			get_tree().change_scene_to_file("res://Menu.tscn")
+			if noc == 6:
+				get_tree().change_scene_to_file("res://TheEnd.tscn")
+			
 	if hour == 9 and self.position.y < -4.2:
 		$Cough.playing = true
 		$Camera3D/Control/JumpscareDark.visible = true
@@ -707,3 +697,11 @@ func _on_enemy_jumpscare() -> void:
 
 func _on_cough_finished() -> void:
 	get_tree().change_scene_to_file("res://Menu.tscn")
+
+
+func _on_step_4_finished() -> void:
+	pass
+
+
+func _on_step_5_finished() -> void:
+	pass

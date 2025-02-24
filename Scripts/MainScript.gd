@@ -1,10 +1,27 @@
 extends Node3D
 signal usingcamera
 var camplace = false
+var whiteSquareSprite
+var whiteSquares = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	whiteSquareSprite = $ControlPanel/BilyCtverec
+	create_grid()
+	whiteSquares[5][5].modulate = Color(0, 0, 1, 1)
 
+func create_grid():
+	var spacing = 0.15
+	var grid_size = 11
+	
+	for y in range(grid_size):
+		var row = []
+		for z in range(grid_size):
+			var new_square = whiteSquareSprite.duplicate()
+			$ControlPanel.add_child(new_square)
+			new_square.transform.origin = Vector3(-0.3, 0.8 + z * spacing,-1 + y * spacing)
+			row.append(new_square)
+		whiteSquares.append(row)
+	
 func _physics_process(delta):
 	get_tree().call_group("enemies","update_player_location",$Player.global_position)
 	#print($Player/Camera3D/RayCast3D.get_collision_point().x)
@@ -13,6 +30,11 @@ func _physics_process(delta):
 		$Cam.position.y += 1.5
 		#print("Je ray pickable")
 		#print($Cam.input_ray_pickable)
+	
+
+
+
+
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -145,18 +167,42 @@ func _on_player_set_win_6_visible() -> void:
 func _on_player_set_win_7_visible() -> void:
 	$Barikady/WinDown7.visible = true
 
+var prevCord = 178917931
 
 func _on_player_refresh_location_label() -> void:
 	var xCord = SimpletonScript.MonsterLoc[0]
 	var yCord = SimpletonScript.MonsterLoc[1]
-	if SimpletonScript.radarRepaired == false:
-		var reportedX = xCord - 1 + randi()%3
-		var reportedY = yCord - 1 + randi()%3
-		$ControlPanel/MonsterLocationLabel.text =  str(reportedX - 1) +" to " + str(reportedX + 1) +" : "+ str(reportedY - 1) +" to " + str(reportedY + 1)
+	var newCord = xCord*10 + yCord
+	if newCord != prevCord:
+		prevCord = newCord
+		for a in range(11):
+			for b in range(11):
+				whiteSquares[a][b].modulate = Color(1, 1, 1, 1)
+		
+		var startXcord = (xCord - 1) - 1 + randi()%3
+		var startYcord = (yCord - 1) - 1 + randi()%3
+		whiteSquares[xCord][yCord].modulate = Color(1, 1, 0, 1)
+		if SimpletonScript.radarRepaired == false:
+			for x in range(3):
+				for y in range(3):
+					if startXcord +x >= 0 and startXcord + x <= 10 and startYcord +y >= 0 and startYcord + y <= 10:
+						whiteSquares[startXcord + x][startYcord + y].modulate = Color(0.6, 0, 0, 1)
+	if whiteSquares[5][5].modulate == Color(0.6, 0, 0, 1) or  whiteSquares[5][5].modulate == Color(1, 0, 0.3, 1) or  whiteSquares[5][5].modulate == Color(1, 1, 0, 1):
+		whiteSquares[5][5].modulate = Color(1, 0, 0.3, 1)
 	else:
-		$ControlPanel/MonsterLocationLabel.text = str(xCord) + " : " + str(yCord)
-
+		whiteSquares[5][5].modulate = Color(0, 0, 1, 1)
 func _on_player_set_window_models() -> void:
+	if SimpletonScript.generatorFull == true:
+		$Benzin.visible = false
+	if SimpletonScript.lureFixed == true:
+		$ObnoveniZvuku/PcPropGreen.visible = true
+		$ObnoveniZvuku/PcPropRed.visible = false
+	if SimpletonScript.alarmFixed == true:
+		$NavigationRegion3D/Props/Stul7/ObnoveniDetekce/PcPropGreen.visible = true
+		$NavigationRegion3D/Props/Stul7/ObnoveniDetekce/PcPropRed.visible = false
+	if SimpletonScript.radarRepaired == true:
+		$AccRadarPuzzle/PcPropGreen.visible = true
+		$AccRadarPuzzle/PcPropRed.visible = true
 	if SimpletonScript.stavOken[0] == 0:
 		$OknaMeshes/OknoPredDole/MeshInstance3D.visible = false
 		$OknaMeshes/OknoPredDole/BrokenOkno.visible = true
@@ -183,3 +229,8 @@ func _on_player_set_window_models() -> void:
 func _on_sudoku_puzzle_sudoku_solved() -> void:
 	$AccRadarPuzzle/PcPropRed.visible = false
 	$AccRadarPuzzle/PcPropGreen.visible = true
+
+
+func _on_player_open_lab_door() -> void:
+	$LabLightGreen.visible = true
+	$LabLightRed.visible = false

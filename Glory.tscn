@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://g1h45vgpuqqj"]
+
+[ext_resource type="Texture2D" uid="uid://c50rigtgj1d4p" path="res://Textures/WhiteSquare.png" id="1_huw55"]
+[ext_resource type="Script" path="res://glory.gd" id="1_yqd0u"]
+[ext_resource type="FontFile" uid="uid://beo0c6m8eks8f" path="res://atwriter.ttf" id="2_hb8ij"]
+[ext_resource type="AudioStream" uid="uid://bip5giv8nitcu" path="res://audio/clock-tick-76039.mp3" id="3_7jh74"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_yqd0u")
+
+[node name="WhiteSquare" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(955.5, 543)
+scale = Vector2(40.86, 22.32)
+texture = ExtResource("1_huw55")
+
+[node name="Title" type="Label" parent="."]
+offset_left = 49.0
+offset_top = 45.0
+offset_right = 1709.0
+offset_bottom = 850.0
+theme_override_fonts/font = ExtResource("2_hb8ij")
+theme_override_font_sizes/font_size = 80
+text = "You have proven yourself a coward. A deserter. For that, you are sent to investigate the disappearances in our newly conquered lands. 
+You are not expected to return. But if you do, return with answers.
+
+Glory be to Luthia."
+autowrap_mode = 3
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_7jh74")
+autoplay = true
+
+[node name="Title2" type="Label" parent="."]
+offset_left = 1430.0
+offset_top = 953.0
+offset_right = 3090.0
+offset_bottom = 1063.0
+theme_override_fonts/font = ExtResource("2_hb8ij")
+theme_override_font_sizes/font_size = 80
+text = "Press enter."
+autowrap_mode = 3

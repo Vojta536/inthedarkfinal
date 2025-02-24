@@ -4,13 +4,15 @@ var noc = 1
 var windowRoom = false
 var alarmRoom = false
 var lureRoom = false
+var generatorFull = false
 var data = {
 			"noc": noc,
 			"windowRoomState": windowRoom,
 			"alarmRoomState": alarmRoom ,
 			"lureRoomState": lureRoom,
 			"stavOken": [1,1,1,1,1,1,1],
-			"RadarState" : false
+			"RadarState" : false,
+			"GeneratorState": generatorFull
 		}
 
 var save_path = "user://variable.save"
@@ -41,7 +43,10 @@ func _process(delta):
 
 
 func _on_continue_pressed():
-	get_tree().change_scene_to_file("res://Scenes/MainScene.tscn")
+	if data["noc"]  == 1:
+		get_tree().change_scene_to_file("res://Glory.tscn")
+	else:
+		get_tree().change_scene_to_file("res://Scenes/MainScene.tscn")
 
 
 func _on_new_game_pressed() -> void:
@@ -53,5 +58,6 @@ func _on_new_game_pressed() -> void:
 		data["lureRoomState"] = false
 		data["stavOken"] = [1,1,1,1,1,1,1]
 		data["RadarState"] = false
+		data["GeneratorState"] = false
 		file.store_var(data)
-		get_tree().change_scene_to_file("res://Scenes/MainScene.tscn")
+		get_tree().change_scene_to_file("res://Glory.tscn")
