@@ -1,14 +1,20 @@
 extends Node3D
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+
+var alphaSprite = 0.0
+
+
+
+func _ready():
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if alphaSprite < 1:
+		alphaSprite += 0.001
+		$Node2D/Black.modulate = Color(0,0,0,alphaSprite)
 
 
 func _on_timer_timeout() -> void:

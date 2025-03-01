@@ -160,8 +160,6 @@ func on_leftClick():
 				if itemsel !=0:
 					itemarr[itemsel] = 1
 				update_items()
-
-
 		if collider.get_parent().name == "BarikadyPickUps":
 			if collider.visible == true:
 				$Camera3D/Control/Point.modulate = Color(1,1,1,1)
@@ -243,7 +241,7 @@ func on_leftClick():
 			collider.visible = false
 			$TipTimeOut.start()
 			$Camera3D/Control/Tips.visible = true
-			$Camera3D/Control/Tips.text = "Room 15..."
+			$Camera3D/Control/Tips.text = "Spare windows...Room 15?..."
 			
 		if collider.name == "DoorForWindows":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
@@ -253,48 +251,48 @@ func on_leftClick():
 				windowsRoomKeycardInHand = false
 				$TipTimeOut.start()
 				$Camera3D/Control/Tips.visible = true
-				$Camera3D/Control/Tips.text = "Spare windows? Nice. I will use those when the night ends."
+				$Camera3D/Control/Tips.text = "Spare windows? That will come in hand, but it would not be wise to repair anything right now."
 			else:
 				$TipTimeOut.start()
 				$Camera3D/Control/Tips.visible = true
-				$Camera3D/Control/Tips.text = "A keycard would be nice."
+				$Camera3D/Control/Tips.text = "Keycard required..."
 				
 		if collider.name == "NoteOne":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			uiView = true
 			$Camera3D/Control/Notes.visible = true
-			$Camera3D/Control/Notes/Label.text = "I know you've been busy, William. I know you've been stressed. But still, I was hoping you'd remember. Just this one day. Why couldn't you? Do you even remember how old I am, the year I was born in? Do you know how many year's I've been alive on this planet today? Maybe once you do, you can get the stupid Audio system working again. I don't care anymore. I'm going for a walk in the forest, whatever is out there is still better than what's waiting for us at home. I love you, you stupid bastard."
+			$Camera3D/Control/Notes/Label.text = "I know you've been busy, William. I know you have been stressed. But still, I was hoping you would remember. Just this one day. Why couldn't you? Do you even remember how old I am, and if not the date, at least the year I was born in? Maybe once you do, you can get the stupid Audio system working again. I do not care anymore, I just want to go home."
 				
 		if collider.name == "NoteTwo":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			uiView = true
 			$Camera3D/Control/Notes.visible = true
-			$Camera3D/Control/Notes/Label.text = "H-172 is a large figure without a clear shape nor form, but it's mass tends to resemble that of a human majority of the times. This appearance is unstable, and often changes.  Attempts at capture in the forest have proven unsuccessful. The house on ground level remains mostly untouched, H-172 reacts negatively to any changes. For security reasons, an improvised lab has been constructed in the large basement complex. H-172 is sensitive to high intensity of light. It is not yet understood how, but H-172 can sense when personnel is present in the site, and H-172 will attempt to make it's way inside at any cost. For these reasons, a lure system and a nearby detection system have been constructed. These along with the long distance radar prove sufficient to provide protection. Cameras are not effective. H-172 is aggressive, and not to be interacted with."
+			$Camera3D/Control/Notes/Label.text = "H-172 is a large figure without a clear shape or form, but its mass tends to resemble that of most of the time. This appearance is unstable and often changes. Attempts at capture in the forest have proven unsuccessful. H-172 is sensitive to high intensity light. It is not yet understood how, but H-172 can sense when personnel is present in the site, and will attempt to make its way inside. For these reasons, a lure system and a nearby detection system have been constructed."
 		if collider.name == "NoteThree":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			uiView = true
 			$Camera3D/Control/Notes.visible = true
-			$Camera3D/Control/Notes/Label.text = "Before anything! Pick up the keycard and open room 15, so you can ge the windows fixed by the end of the night. For the unfortunote soul whose next shift is with this radar: The radar tries to estimate the position of the monster. Use the red button to update the screen. The thing should be somewhere in the red squares. In case it gets close to the center, get off your ass and alert someone. That means its here. Its a little innacurate, in case you want to calibrate it, go to room 8. I cannot be bothered."
+			$Camera3D/Control/Notes/Label.text = "Operating instructions: The radar roughly estimates the position of any entities in the nearby area. To update the display, press the red button to your right side. The radar can become inaccurate over time. Any entity is guaranteed to be somewhere in the area marked by red. Our laboratory is marked by blue, in case the blue turns into a pink, the entity is nearby, so pay attention. In case you want to calibrate the radar to get better results, go to room 8."
 		if collider.name == "NoteFour":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			uiView = true
 			$Camera3D/Control/Notes.visible = true
-			$Camera3D/Control/Notes/Label.text = "I swear, I've seen it. I may be sleep deprived, but there is no way that I'm just seeing things. I saw the camera feed. How did it get inside undetected? How come it didn't kill anyone? And how did it disappear again? Maybe I'm just going crazy, that's what everyone's telling me. That I need to rest. There is no magic, there are no fairy tales. Everything in this world has to abide by the rules universe has set for us, so how did it...I don't want to know anymore."
+			$Camera3D/Control/Notes/Label.text = "I swear, I've seen it. I may be sleep deprived, but there is no way that I'm just seeing things. I saw the camera feed. How did it get inside undetected? How come it didn't kill anyone? And how did it disappear again? Maybe I'm just going crazy, that's what everyone's telling me. That I need to rest. There is no magic, there are no fairy tales. Everything in this world has to abide by the rules universe has set for us, right? I don't want to know anymore."
 		if collider.name == "NoteFive":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			uiView = true
 			$Camera3D/Control/Notes.visible = true
-			$Camera3D/Control/Notes/Label.text = "I can't stand it here anymore. The other's are scientists, they at least have some ACTUAL reason to be here. But me? I'm just a corrupt politician! Was taking a few birpes really that bad enough to get me sent here? Whenever I ask William if we'll ever be able to go home, he says when we capture that thing. Over my dead body, literally! I've seen 4 teams come and die already, why would this one be any different? I want to die, I want to die, I'd rather rot in jail."
+			$Camera3D/Control/Notes/Label.text = "To anyone who is here, and should not be. The archiving system used to be locked behind a password, but after the last crash, that feature just is not working. I trust that you have enough respect not to snoop on others. We are all in this together. We all have bad days, but if we want to get out of here, we must cooperate. With regards, Maya Liams."
 		if collider.name == "NoteSix":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			uiView = true
 			$Camera3D/Control/Notes.visible = true
-			$Camera3D/Control/Notes/Label.text = "The lab is closed on mondays. Important! In case any staff forgets, the lab gets flooded with gas after 9:00, we cant have any infection spreading like last time. If you are down below when the clock hits 9, you are on your own."
+			$Camera3D/Control/Notes/Label.text = "The lab is closed on Mondays. Important! After 9:00, the laboratory goes through a routine disinfection. If anyone stays when the clock hits that hour, they are as well as dead. No one will be coming to save you."
 		if collider.name == "NoteSeven":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			uiView = true
 			$Camera3D/Control/Notes.visible = true
-			$Camera3D/Control/Notes/Label.text = "I hate having night shifts up here. I keep seeing that thing in the distance. It is mocking me. And when the night ends, someone will have to repair all the windows. Guess who??? Me. Just superb. Gosh, I should have just stayed in jail. The recharger up here is full, and the rest are in the lab. Amazing."
+			$Camera3D/Control/Notes/Label.text = "Hey, whoever it is that has a shift up here, after me. Trust me, it is not so bad. That thing out there is loud, you will notice if its near. The people down there will also notice its here. You will not die. Just remember to keep your Flash charged, and if you see it near a window, flash it. Everything will be fine. And make yourself a coffee, now would not be the best time to fall asleep."
 		if collider.name == "Mapa":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			uiView = true
@@ -444,7 +442,7 @@ func _physics_process(delta):
 		if itemsel != 0 and itemarr[itemsel] > 0:
 			itemArrPoint[itemsel].visible = true
 			itemArrPoint[itemsel].position = $GroundRayCast.get_collision_point()
-			itemArrPoint[itemsel].position.y + 0.4
+			itemArrPoint[itemsel].position.y = itemArrPoint[itemsel].position.y + 0.2
 			itemarr[itemsel] = 0
 			itemArrPoint[itemsel] = null
 			update_items()
@@ -674,6 +672,8 @@ func _on_timer_timeout() -> void:
 			file.store_var(data)
 			if noc == 6:
 				get_tree().change_scene_to_file("res://TheEnd.tscn")
+			else:
+				get_tree().change_scene_to_file("res://Menu.tscn")
 			
 	if hour == 9 and self.position.y < -4.2:
 		$Cough.playing = true

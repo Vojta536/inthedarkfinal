@@ -25,8 +25,6 @@ func _ready():
 		var file = FileAccess.open(save_path, FileAccess.WRITE)
 		file.store_var(data) 
 		file.close()
-	
-	
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if FileAccess.file_exists(save_path) == false:
 		var file = FileAccess.open(save_path, FileAccess.WRITE)
@@ -37,7 +35,7 @@ func _ready():
 		data = file.get_var()
 	print(data)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
 	pass
 

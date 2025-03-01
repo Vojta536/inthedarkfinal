@@ -2,13 +2,15 @@ extends CharacterBody3D
 var enemyvec = Vector2(0,0)
 var playervec = Vector3(0,0,0)
 
-static var oknopreddole = Vector3(2.1,1.78,-8.3)
-static var oknopreddole1 = Vector3(-5.4,1.9,-8.3)
-static var oknoVpravodole = Vector3(-10.8,1.9,-0.852)
-static var oknoVzaduDole = Vector3(-6.23,1.8,10.652)
-static var oknoVzaduDole2 = Vector3(7.24,1.8,10.652)
-static var oknoVlevoDole2 = Vector3(10.85,1.8,5.005)
-static var oknoVlevoDole = Vector3(10.85,1.8,-4.8)
+static var winFrontDown = Vector3(2.1,1.78,-8.3)
+static var winFrontDown1 = Vector3(-5.4,1.9,-8.3)
+static var winRightDown = Vector3(-10.8,1.9,-0.852)
+static var winBackDown = Vector3(-6.23,1.8,10.652)
+static var winBackDown2 = Vector3(7.24,1.8,10.652)
+static var winLeftDown2 = Vector3(10.85,1.8,5.005)
+static var winLeftDown = Vector3(10.85,1.8,-4.8)
+
+var inJumpscare = false
 
 var firstNight = false
 var waiting = false
@@ -22,19 +24,19 @@ signal hunt
 func _window_location_match(WindowID):
 	match WindowID:
 		0:
-			return oknopreddole
+			return winFrontDown
 		1:
-			return oknopreddole1
+			return winFrontDown1
 		2:
-			return oknoVpravodole
+			return winRightDown
 		3:
-			return oknoVzaduDole
+			return winBackDown
 		4:
-			return oknoVzaduDole2
+			return winBackDown2
 		5:
-			return oknoVlevoDole2
+			return winLeftDown2
 		6:
-			return oknoVlevoDole
+			return winLeftDown
 		_:
 			return Vector3.ZERO
 
@@ -89,13 +91,13 @@ var playerJumpscare = false
 
 var roaming = true
 
-signal udelatBordel1
-signal udelatBordel2
-signal udelatBordel3
-signal udelatBordel4
-signal udelatBordel5
-signal udelatBordel6
-signal udelatBordel7
+signal visualiseBreaking1
+signal visualiseBreaking2
+signal visualiseBreaking3
+signal visualiseBreaking4
+signal visualiseBreaking5
+signal visualiseBreaking6
+signal visualiseBreaking7
 
 var save_path = "user://variable.save"
 var noc = 1
@@ -182,19 +184,19 @@ func next_destination():
 			SimpletonScript.monsterWall = 4
 		match(nextDesOkno):
 			0:
-				nextDesLoc = oknopreddole
+				nextDesLoc = winFrontDown
 			1:
-				nextDesLoc = oknopreddole1
+				nextDesLoc = winFrontDown1
 			2:
-				nextDesLoc = oknoVpravodole
+				nextDesLoc = winRightDown
 			3:
-				nextDesLoc = oknoVzaduDole
+				nextDesLoc = winBackDown
 			4:
-				nextDesLoc = oknoVzaduDole2
+				nextDesLoc = winBackDown2
 			5:
-				nextDesLoc = oknoVlevoDole2
+				nextDesLoc = winLeftDown2
 			6:
-				nextDesLoc = oknoVlevoDole
+				nextDesLoc = winLeftDown
 			_:
 				# Default case if no match
 				nextDesLoc = Vector3(0, 0, 0)
@@ -296,36 +298,36 @@ func _near_window(WindowID):
 				SimpletonScript.stavOken[WindowID] = 0
 				match(WindowID):
 					0:
-						emit_signal("udelatBordel1")
+						emit_signal("visualiseBreaking1")
 					1:
-						emit_signal("udelatBordel2")
+						emit_signal("visualiseBreaking2")
 					2:
-						emit_signal("udelatBordel3")
+						emit_signal("visualiseBreaking3")
 					3:
-						emit_signal("udelatBordel4")
+						emit_signal("visualiseBreaking4")
 					4:
-						emit_signal("udelatBordel5")
+						emit_signal("visualiseBreaking5")
 					5:
-						emit_signal("udelatBordel6")
+						emit_signal("visualiseBreaking6")
 					6:
-						emit_signal("udelatBordel7")
+						emit_signal("visualiseBreaking7")
 			if SimpletonScript.stavBarikad[WindowID] == 1:
 				SimpletonScript.stavBarikad[WindowID] = 0
 				match(WindowID):
 					0:
-						emit_signal("udelatBordel1")
+						emit_signal("visualiseBreaking1")
 					1:
-						emit_signal("udelatBordel2")
+						emit_signal("visualiseBreaking2")
 					2:
-						emit_signal("udelatBordel3")
+						emit_signal("visualiseBreaking3")
 					3:
-						emit_signal("udelatBordel4")
+						emit_signal("visualiseBreaking4")
 					4:
-						emit_signal("udelatBordel5")
+						emit_signal("visualiseBreaking5")
 					5:
-						emit_signal("udelatBordel6")
+						emit_signal("visualiseBreaking6")
 					6:
-						emit_signal("udelatBordel7")
+						emit_signal("visualiseBreaking7")
 		isFlashed = false
 		next_destination()
 		print("next_des")
@@ -346,9 +348,10 @@ func _on_player_flash_enemy():
 
 
 func _on_jumpscare_detector_area_entered(area: Area3D) -> void:
-	$Jumpscare.playing = true
-	emit_signal("jumpscare")
-
+	if inJumpscare == false:
+		inJumpscare = true
+		$Jumpscare.playing = true
+		emit_signal("jumpscare")
 
 func _on_jumpscare_detector_area_exited(area: Area3D) -> void:
 	pass # Replace with function body.

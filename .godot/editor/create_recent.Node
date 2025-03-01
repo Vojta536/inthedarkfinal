@@ -1,3 +1,7 @@
-AudioStreamPlayer3D
-Button
-Control
+ScrollContainer
+VBoxContainer
+VScrollBar
+Timer
+AudioStreamPlayer
+Label
+Node2D

@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://y42r0t27whfi"]
+
+[ext_resource type="Script" path="res://after_night.gd" id="1_3fiti"]
+[ext_resource type="Texture2D" uid="uid://c50rigtgj1d4p" path="res://Textures/WhiteSquare.png" id="2_tba4k"]
+[ext_resource type="FontFile" uid="uid://beo0c6m8eks8f" path="res://atwriter.ttf" id="3_k4161"]
+[ext_resource type="Shader" path="res://Scripts/noise.gdshader" id="4_8i48r"]
+[ext_resource type="AudioStream" uid="uid://bip5giv8nitcu" path="res://audio/clock-tick-76039.mp3" id="5_k5xga"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8oiaa"]
+shader = ExtResource("4_8i48r")
+
+[node name="AfterNight" type="Node2D"]
+script = ExtResource("1_3fiti")
+
+[node name="WhiteSquare" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(940.5, 544)
+scale = Vector2(39.14, 22.36)
+texture = ExtResource("2_tba4k")
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.270588)
+offset_left = 40.0
+offset_top = 34.0
+offset_right = 1874.0
+offset_bottom = 1039.0
+theme_override_fonts/font = ExtResource("3_k4161")
+theme_override_font_sizes/font_size = 80
+text = "You recharged your batteries, took a break and went to bed. It is hard to sleep with how cold it is outside, broken windows or not. Tommorow is another day."
+autowrap_mode = 2
+
+[node name="Bila" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_8oiaa")
+position = Vector2(962, 525)
+scale = Vector2(39.98, 22.08)
+texture = ExtResource("2_tba4k")
+
+[node name="Label2" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.270588)
+offset_left = 951.0
+offset_top = 954.0
+offset_right = 2785.0
+offset_bottom = 1959.0
+theme_override_fonts/font = ExtResource("3_k4161")
+theme_override_font_sizes/font_size = 80
+text = "Press enter to continue."
+autowrap_mode = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_k5xga")
+volume_db = 4.685
+autoplay = true

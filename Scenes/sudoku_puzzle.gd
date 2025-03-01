@@ -24,7 +24,7 @@ var SumDown = 0
 var SumDown2 = 0
 var SumDown3 = 0
 
-var Hintvalues = [1,1,1,1,1,1,1,1,1]
+var Hintvalues = [0,0,0,0,0,0,0,0]
 
 signal sudokuSolved
 

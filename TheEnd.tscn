@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://burwkfbao17so"]
+[gd_scene load_steps=35 format=4 uid="uid://burwkfbao17so"]
 
 [ext_resource type="Texture2D" uid="uid://b818acpwftp0l" path="res://Textures/Ground037_1K-PNG/Ground037_1K-PNG_Color.png" id="1_x66j6"]
 [ext_resource type="Script" path="res://the_end.gd" id="1_yobps"]
@@ -12,8 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://c0ttbw4tavbdd" path="res://Textures/Planks037A_1K-PNG/Planks037A_1K-PNG_Displacement.png" id="9_4arlo"]
 [ext_resource type="Texture2D" uid="uid://ds7do2n8xgsr5" path="res://Textures/Planks037A_1K-PNG/Planks037A_1K-PNG_NormalGL.png" id="10_82mrm"]
 [ext_resource type="Texture2D" uid="uid://dgpkl3j6ha6ht" path="res://Textures/Planks037A_1K-PNG/Planks037A_1K-PNG_Roughness.png" id="11_io8qe"]
-[ext_resource type="Texture2D" uid="uid://3aj55hcp2b41" path="res://Textures/lol.png" id="12_vgwei"]
-[ext_resource type="AudioStream" uid="uid://bip5giv8nitcu" path="res://audio/clock-tick-76039.mp3" id="14_14e6k"]
+[ext_resource type="AudioStream" uid="uid://c0dsclfcg255m" path="res://audio/rain-sound-188158.mp3" id="13_bfx1i"]
+[ext_resource type="FontFile" uid="uid://beo0c6m8eks8f" path="res://atwriter.ttf" id="15_3r3m0"]
+[ext_resource type="Shader" path="res://Scripts/noise.gdshader" id="16_x76e2"]
+[ext_resource type="Texture2D" uid="uid://c50rigtgj1d4p" path="res://Textures/WhiteSquare.png" id="17_glmww"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xo1dy"]
 
@@ -486,6 +488,9 @@ roughness_texture = ExtResource("11_io8qe")
 normal_texture = ExtResource("10_82mrm")
 uv1_scale = Vector3(3, 3, 3)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2g1fk"]
+shader = ExtResource("16_x76e2")
+
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_yobps")
 
@@ -536,22 +541,65 @@ spot_range = 56.422
 [node name="Camera3D2" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.0881, 2.63492, -51.2578)
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8157, 0.584579, -64.9011)
-billboard = 1
-texture = ExtResource("12_vgwei")
-
 [node name="StromyMultiMesh2" type="MultiMeshInstance3D" parent="."]
 transform = Transform3D(0.962663, 0, 0.270701, 0, 1, 0, -0.270701, 0, 0.962663, 19.1166, -1.52165, -44.7081)
 multimesh = SubResource("MultiMesh_61k44")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("14_14e6k")
+stream = ExtResource("13_bfx1i")
+volume_db = -10.306
 autoplay = true
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 20.0
 one_shot = true
 autostart = true
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Black" type="Sprite2D" parent="Node2D"]
+modulate = Color(0, 0, 0, 0)
+position = Vector2(958.5, 551)
+scale = Vector2(40.38, 22.56)
+texture = ExtResource("17_glmww")
+
+[node name="Label" type="Label" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.270588)
+offset_left = 448.0
+offset_top = 415.0
+offset_right = 1370.0
+offset_bottom = 513.0
+theme_override_fonts/font = ExtResource("15_3r3m0")
+theme_override_font_sizes/font_size = 40
+text = "I cant breathe. I cant move. I no longer am."
+autowrap_mode = 2
+
+[node name="Label2" type="Label" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.270588)
+offset_left = 785.0
+offset_top = 670.0
+offset_right = 1271.0
+offset_bottom = 768.0
+theme_override_fonts/font = ExtResource("15_3r3m0")
+theme_override_font_sizes/font_size = 40
+text = "Thank you."
+autowrap_mode = 2
+
+[node name="Label4" type="Label" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.270588)
+offset_left = 582.0
+offset_top = 540.0
+offset_right = 1442.0
+offset_bottom = 638.0
+theme_override_fonts/font = ExtResource("15_3r3m0")
+theme_override_font_sizes/font_size = 40
+text = "And I see them again. My beloved."
+autowrap_mode = 2
+
+[node name="Noise" type="Sprite2D" parent="Node2D"]
+material = SubResource("ShaderMaterial_2g1fk")
+position = Vector2(981.5, 541)
+scale = Vector2(39.98, 22.08)
+texture = ExtResource("17_glmww")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

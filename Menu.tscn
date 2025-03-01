@@ -550,21 +550,8 @@ text = "Credits"
 [node name="CreditsScreen" type="Control" parent="Control"]
 visible = false
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Title" type="Label" parent="Control/CreditsScreen"]
-layout_mode = 0
-offset_left = 574.0
-offset_top = 250.0
-offset_right = 1258.0
-offset_bottom = 550.0
-theme_override_fonts/font = ExtResource("3_tfxqt")
-theme_override_font_sizes/font_size = 80
-text = "Modely: Klavesnice
-Polyhaven
-Free Audio
-"
+offset_right = 1926.0
+offset_bottom = 1065.0
 
 [node name="GoBack" type="Button" parent="Control/CreditsScreen"]
 layout_mode = 0
@@ -573,6 +560,57 @@ offset_bottom = 88.0
 theme_override_fonts/font = ExtResource("3_tfxqt")
 theme_override_font_sizes/font_size = 40
 text = "Go back"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/CreditsScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 108.0
+offset_right = 3.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Control/CreditsScreen/ScrollContainer"]
+custom_minimum_size = Vector2(1920, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_tfxqt")
+theme_override_font_sizes/font_size = 30
+text = "\"Keyboard\" (https://skfb.ly/6uLXr) by oscarherry3d is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+\"Assets from Poly Haven, licensed under CC0.\"
+Created using Bark014_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Cardboard003_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Carpet015_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Concrete030_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Concrete041B_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Concrete046_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Fabric022_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Ground037_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Metal004_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Metal030_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using PaintedPlaster017_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Paper003_1K-JPG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Planks037A_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Plaster001_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Created using Plastic010_1K-PNG from ambientCG.com, licensed under the Creative Commons CC0 1.0 Universal License.
+Running Generator – l3hrja (Pixabay)
+Hum – freesound_community (Pixabay)
+Clock Tick – freesound_community (Pixabay)
+Beep...beep...beep.. – freesound_community (Pixabay)
+Cough Voice – santg (Pixabay)
+Loud Thud – freesound_community (Pixabay)
+Main Door Opening-Closing – freesound_community (Pixabay)
+Spooky Ambiance #4 – freesound_community (Pixabay)
+Concrete Footsteps 1 – freesound_community (Pixabay)
+Squeaky Jumpscare 2 – freesound_community (Pixabay)
+Short Monster Scream – freesound_community (Pixabay)
+Hand-crank Generator (slow) – freesound_community (Pixabay)
+Windy Night Forest Ambience – Alex_Jauk (Pixabay)
+Old Camera Flash – freesound_community (Pixabay)
+"
+autowrap_mode = 2
 
 [node name="Bila" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_lyfvp")

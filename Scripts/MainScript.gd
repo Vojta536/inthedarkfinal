@@ -3,6 +3,8 @@ signal usingcamera
 var camplace = false
 var whiteSquareSprite
 var whiteSquares = []
+var spacing = 0.15
+var gridSize = 11
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	whiteSquareSprite = $ControlPanel/BilyCtverec
@@ -10,16 +12,14 @@ func _ready():
 	whiteSquares[5][5].modulate = Color(0, 0, 1, 1)
 
 func create_grid():
-	var spacing = 0.15
-	var grid_size = 11
 	
-	for y in range(grid_size):
+	for y in range(gridSize):
 		var row = []
-		for z in range(grid_size):
-			var new_square = whiteSquareSprite.duplicate()
-			$ControlPanel.add_child(new_square)
-			new_square.transform.origin = Vector3(-0.3, 0.8 + z * spacing,-1 + y * spacing)
-			row.append(new_square)
+		for z in range(gridSize):
+			var newSquare = whiteSquareSprite.duplicate()
+			$ControlPanel.add_child(newSquare)
+			newSquare.transform.origin = Vector3(-0.3, 0.8 + z * spacing,-1 + y * spacing)
+			row.append(newSquare)
 		whiteSquares.append(row)
 	
 func _physics_process(delta):
@@ -73,7 +73,7 @@ func _on_player_cam_1():
 
 
 
-func _on_enemy_udelat_bordel(index: int, window_mesh_path: String, barricade_path: String, mess_path: String) -> void:
+func _on_enemy_visualise_breaking(index: int, window_mesh_path: String, barricade_path: String, mess_path: String) -> void:
 	if SimpletonScript.stavOken[index] == 0 and get_node(window_mesh_path + "/MeshInstance3D").visible == true:
 		get_node(window_mesh_path + "/MeshInstance3D").visible = false
 		get_node(window_mesh_path + "/BrokenOkno").visible = true
@@ -82,63 +82,69 @@ func _on_enemy_udelat_bordel(index: int, window_mesh_path: String, barricade_pat
 		get_node(mess_path).visible = true
 		get_node(barricade_path).visible = false
 
-func _on_enemy_udelat_bordel_1() -> void:
-	_on_enemy_udelat_bordel(
+
+
+func _on_enemy_visualise_breaking_1() -> void:
+	_on_enemy_visualise_breaking(
 		0,
 		"OknaMeshes/OknoPredDole",
 		"Barikady/WinDown1",
 		"BordelNaZemi/Bordel1"
 	)
 
-func _on_enemy_udelat_bordel_2() -> void:
-	_on_enemy_udelat_bordel(
+
+func _on_enemy_visualise_breaking_2() -> void:
+	_on_enemy_visualise_breaking(
 		1,
 		"OknaMeshes/OknoPredDole2",
 		"Barikady/WinDown2",
 		"BordelNaZemi/Bordel2"
 	)
 
-func _on_enemy_udelat_bordel_3() -> void:
-	_on_enemy_udelat_bordel(
+
+func _on_enemy_visualise_breaking_3() -> void:
+	_on_enemy_visualise_breaking(
 		2,
 		"OknaMeshes/OknoVpravoDole",
 		"Barikady/WinDown3",
 		"BordelNaZemi/Bordel3"
 	)
 
-func _on_enemy_udelat_bordel_4() -> void:
-	_on_enemy_udelat_bordel(
+
+func _on_enemy_visualise_breaking_4() -> void:
+	_on_enemy_visualise_breaking(
 		3,
 		"OknaMeshes/OknoVzaduDole",
 		"Barikady/WinDown4",
 		"BordelNaZemi/Bordel4"
 	)
 
-func _on_enemy_udelat_bordel_5() -> void:
-	_on_enemy_udelat_bordel(
+
+func _on_enemy_visualise_breaking_5() -> void:
+	_on_enemy_visualise_breaking(
 		4,
 		"OknaMeshes/OknoVzaduDole2",
 		"Barikady/WinDown5",
 		"BordelNaZemi/Bordel5"
 	)
 
-func _on_enemy_udelat_bordel_6() -> void:
-	_on_enemy_udelat_bordel(
+
+func _on_enemy_visualise_breaking_6() -> void:
+	_on_enemy_visualise_breaking(
 		5,
 		"OknaMeshes/OknoVlevoDole2",
 		"Barikady/WinDown6",
 		"BordelNaZemi/Bordel6"
 	)
 
-func _on_enemy_udelat_bordel_7() -> void:
-	_on_enemy_udelat_bordel(
+
+func _on_enemy_visualise_breaking_7() -> void:
+	_on_enemy_visualise_breaking(
 		6,
 		"OknaMeshes/OknoVlevoDole",
 		"Barikady/WinDown7",
 		"BordelNaZemi/Bordel7"
 	)
-
-
 
 func _on_player_set_win_1_visible() -> void:
 	$Barikady/WinDown1.visible = true
