@@ -1,7 +1,8 @@
+AudioStreamPlayer3D
+AudioStreamPlayer
 ScrollContainer
 VBoxContainer
 VScrollBar
 Timer
-AudioStreamPlayer
 Label
 Node2D

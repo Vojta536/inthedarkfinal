@@ -1,8 +1,7 @@
-[gd_scene load_steps=37 format=4 uid="uid://g1h45vgpuqqj"]
+[gd_scene load_steps=36 format=4 uid="uid://g1h45vgpuqqj"]
 
 [ext_resource type="Script" path="res://Intro.gd" id="1_imrdn"]
 [ext_resource type="Texture2D" uid="uid://b818acpwftp0l" path="res://Textures/Ground037_1K-PNG/Ground037_1K-PNG_Color.png" id="2_5g3nu"]
-[ext_resource type="FontFile" uid="uid://beo0c6m8eks8f" path="res://atwriter.ttf" id="2_hb8ij"]
 [ext_resource type="AudioStream" uid="uid://bip5giv8nitcu" path="res://audio/clock-tick-76039.mp3" id="3_7jh74"]
 [ext_resource type="Texture2D" uid="uid://c2brcu1pf0pkn" path="res://Textures/Ground037_1K-PNG/Ground037_1K-PNG_Roughness.png" id="3_42gqx"]
 [ext_resource type="Environment" uid="uid://u6rj8inxjr1i" path="res://Scenes/NightLight.tres" id="4_oh3jb"]
@@ -564,48 +563,6 @@ autoplay = true
 
 [node name="Node2D" type="Node2D" parent="."]
 
-[node name="Label" type="Label" parent="Node2D"]
-modulate = Color(1, 1, 1, 0.270588)
-offset_right = 486.0
-offset_bottom = 98.0
-theme_override_fonts/font = ExtResource("2_hb8ij")
-theme_override_font_sizes/font_size = 40
-text = "How long has it been?"
-autowrap_mode = 2
-
-[node name="Label2" type="Label" parent="Node2D"]
-modulate = Color(1, 1, 1, 0.270588)
-offset_left = 1417.0
-offset_top = 872.0
-offset_right = 1903.0
-offset_bottom = 970.0
-theme_override_fonts/font = ExtResource("2_hb8ij")
-theme_override_font_sizes/font_size = 40
-text = "Why won't you let me?"
-autowrap_mode = 2
-
-[node name="Label3" type="Label" parent="Node2D"]
-modulate = Color(1, 1, 1, 0.270588)
-offset_left = 210.0
-offset_top = 564.0
-offset_right = 696.0
-offset_bottom = 662.0
-theme_override_fonts/font = ExtResource("2_hb8ij")
-theme_override_font_sizes/font_size = 40
-text = "Why don't I remember?"
-autowrap_mode = 2
-
-[node name="Label4" type="Label" parent="Node2D"]
-modulate = Color(1, 1, 1, 0.270588)
-offset_left = 984.0
-offset_top = 178.0
-offset_right = 1470.0
-offset_bottom = 276.0
-theme_override_fonts/font = ExtResource("2_hb8ij")
-theme_override_font_sizes/font_size = 40
-text = "I have been here before."
-autowrap_mode = 2
-
 [node name="Bila" type="Sprite2D" parent="Node2D"]
 material = SubResource("ShaderMaterial_6g4kc")
 position = Vector2(981.5, 541)
@@ -613,7 +570,7 @@ scale = Vector2(39.98, 22.08)
 texture = ExtResource("17_ph77l")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 8.0
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

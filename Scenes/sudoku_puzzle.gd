@@ -16,13 +16,13 @@ var mapaCiselNaZnaky = {
 
 var values = [1,9,8,2,7,3,4,2,1]
 
-var SumRight = 0
-var SumRight2 = 0
-var SumRight3 = 0
+var SumRight: int = 0
+var SumRight2: int = 0
+var SumRight3: int = 0
 
-var SumDown = 0
-var SumDown2 = 0
-var SumDown3 = 0
+var SumDown: int = 0
+var SumDown2: int = 0
+var SumDown3: int = 0
 
 var Hintvalues = [0,0,0,0,0,0,0,0]
 

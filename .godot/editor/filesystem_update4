@@ -1,10 +1,6 @@
-res://Scripts/MainScript.gd
-res://Menu.tscn
-res://after_night.gd
-res://Scripts/enemy.gd
-res://Glory.tscn
 res://Scenes/MainScene.tscn
+res://Scenes/light2.tres
+res://Menu.tscn
+res://Glory.tscn
 res://TheEnd.tscn
 res://after_night.tscn
-res://the_end.gd
-res://Scripts/player.gd

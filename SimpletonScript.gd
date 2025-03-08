@@ -4,18 +4,18 @@ var playernoise = 0
 var stavOken = [1,1,1,1,1,1,1]
 var stavBarikad = [0,0,0,0,0,0,0]
 
-var radarRepaired = false
+var radarRepaired: bool = false
 
 
-var alarmFixed = false
+var alarmFixed: bool = false
 
-var openedWindowsRoom = false
+var openedWindowsRoom: bool = false
 
-var lureFixed = false
+var lureFixed: bool = false
 
-var generatorFull = false
+var generatorFull: bool = false
 
-var monsterWall = 0
+var monsterWall: int = 0
 
 var MonsterLoc = [0,0]
 # Called when the node enters the scene tree for the first time.

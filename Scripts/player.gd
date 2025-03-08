@@ -7,9 +7,9 @@ const JUMP_VELOCITY = 4.5
 var itemarr = [0,0,0,0]
 
 var itemArrPoint = [null,null,null,null]
-var itemsel = 0
-var camuse = false
-var placecam = false
+var itemsel: int = 0
+var camuse: bool = false
+var placecam: bool = false
 var collider
 signal viewcam
 signal cam1
@@ -32,27 +32,27 @@ signal setWin7Visible
 var hour = 0
 
 
-var SudokuView = false
+var SudokuView: bool = false
 
 
 
 
-var save_path = "user://variable.save"
+var save_path: String = "user://variable.save"
 
 signal openWindowRoomDoor
 
 signal refreshLocationLabel
 
-var FlashCharged = true
-var LightVisible = true
+var FlashCharged: bool  = true
+var LightVisible: bool  = true
 
-var enteringPin = false
+var enteringPin: bool  = false
 
 
 
-var uiView = false
+var uiView: bool  = false
 
-var windowsRoomKeycardInHand = false
+var windowsRoomKeycardInHand: bool  = false
 
 
 
@@ -65,7 +65,7 @@ signal openNightOneDoorPl
 signal flashEnemy
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-var noc = 1
+var noc: int = 1
 var data = {
 			"noc": noc,
 			"windowRoomState": SimpletonScript.openedWindowsRoom,
@@ -196,6 +196,9 @@ func on_leftClick():
 				collider.get_node("PcPropGreen").visible = true
 				$ManagmentSystem/DetectionSystem.visible = true
 				$ManagmentSystem/NoDetectionSys.visible = false
+				$TipTimeOut.start()
+				$Camera3D/Control/Tips.visible = true
+				$Camera3D/Control/Tips.text = "Detection system is now actived."
 			else:
 				$TipTimeOut.start()
 				$Camera3D/Control/Tips.visible = true
@@ -217,6 +220,9 @@ func on_leftClick():
 						SimpletonScript.lureFixed = true
 						collider.get_node("PcPropRed").visible = false
 						collider.get_node("PcPropGreen").visible = true
+						$TipTimeOut.start()
+						$Camera3D/Control/Tips.visible = true
+						$Camera3D/Control/Tips.text = "Lure system is up and running."
 			else:
 				$TipTimeOut.start()
 				$Camera3D/Control/Tips.visible = true
@@ -238,6 +244,7 @@ func on_leftClick():
 		if collider.name == "KeyCardWindowsRoom" and collider.visible == true:
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			windowsRoomKeycardInHand = true
+			$Camera3D/KeycardIcon.visible = true
 			collider.visible = false
 			$TipTimeOut.start()
 			$Camera3D/Control/Tips.visible = true
@@ -249,10 +256,11 @@ func on_leftClick():
 				SimpletonScript.openedWindowsRoom = true
 				emit_signal("openWindowRoomDoor")
 				windowsRoomKeycardInHand = false
+				$Camera3D/KeycardIcon.visible = false
 				$TipTimeOut.start()
 				$Camera3D/Control/Tips.visible = true
 				$Camera3D/Control/Tips.text = "Spare windows? That will come in hand, but it would not be wise to repair anything right now."
-			else:
+			elif SimpletonScript.openedWindowsRoom == false:
 				$TipTimeOut.start()
 				$Camera3D/Control/Tips.visible = true
 				$Camera3D/Control/Tips.text = "Keycard required..."
@@ -459,7 +467,7 @@ func _physics_process(delta):
 		update_items()
 		LightVisible = false
 	
-	if $Camera3D/SpotLight3D.light_energy > 0.3:
+	if $Camera3D/SpotLight3D.light_energy > 0.5:
 		$Camera3D/SpotLight3D.light_energy -= 0.05 
 	
 	collider = $Camera3D/RayCast3D.get_collider()
@@ -649,7 +657,7 @@ func _on_timer_timeout() -> void:
 	print("hour")
 	print(hour)
 		
-	if hour < 10:
+	if hour < 9:
 		hour = hour + 1
 		$Camera3D/Control/Time.text = str(hour)+":00"
 	else:
@@ -673,13 +681,9 @@ func _on_timer_timeout() -> void:
 			if noc == 6:
 				get_tree().change_scene_to_file("res://TheEnd.tscn")
 			else:
-				get_tree().change_scene_to_file("res://Menu.tscn")
+				get_tree().change_scene_to_file("res://after_night.tscn")
 			
-	if hour == 9 and self.position.y < -4.2:
-		$Cough.playing = true
-		$Camera3D/Control/JumpscareDark.visible = true
-	if hour == 8 and self.position.y < -4.2:
-		$LabWarning.playing = true
+
 
 
 
@@ -696,7 +700,7 @@ func _on_enemy_jumpscare() -> void:
 
 
 func _on_cough_finished() -> void:
-	get_tree().change_scene_to_file("res://Menu.tscn")
+	pass
 
 
 func _on_step_4_finished() -> void:

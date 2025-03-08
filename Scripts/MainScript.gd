@@ -203,6 +203,8 @@ func _on_player_set_window_models() -> void:
 	if SimpletonScript.lureFixed == true:
 		$ObnoveniZvuku/PcPropGreen.visible = true
 		$ObnoveniZvuku/PcPropRed.visible = false
+	if SimpletonScript.openedWindowsRoom == true:
+		$KeyCardWindowsRoom.visible = false
 	if SimpletonScript.alarmFixed == true:
 		$NavigationRegion3D/Props/Stul7/ObnoveniDetekce/PcPropGreen.visible = true
 		$NavigationRegion3D/Props/Stul7/ObnoveniDetekce/PcPropRed.visible = false

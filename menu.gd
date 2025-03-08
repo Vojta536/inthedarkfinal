@@ -1,10 +1,11 @@
 extends Node3D
 
 var noc = 1
-var windowRoom = false
-var alarmRoom = false
-var lureRoom = false
-var generatorFull = false
+var windowRoom: bool = false
+var alarmRoom: bool = false
+var lureRoom: bool = false
+var generatorFull: bool = false
+var doubleCheck: bool = false
 var data = {
 			"noc": noc,
 			"windowRoomState": windowRoom,
@@ -34,6 +35,7 @@ func _ready():
 		var file = FileAccess.open(save_path,FileAccess.READ)
 		data = file.get_var()
 	print(data)
+	$Control/BaseUI/Continue.text = "Continue " + str(data["noc"])
 
 
 func _process(delta):
@@ -48,7 +50,10 @@ func _on_continue_pressed():
 
 
 func _on_new_game_pressed() -> void:
-	if FileAccess.file_exists(save_path) == true:
+	if doubleCheck == false:
+		doubleCheck = true
+		$Control/BaseUI/AreYouSure.visible = true
+	elif FileAccess.file_exists(save_path) == true:
 		var file = FileAccess.open(save_path, FileAccess.WRITE)
 		data["noc"] = 1
 		data["windowRoomState"] = false

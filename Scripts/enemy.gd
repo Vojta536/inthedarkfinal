@@ -1,19 +1,19 @@
 extends CharacterBody3D
-var enemyvec = Vector2(0,0)
-var playervec = Vector3(0,0,0)
+var enemyvec: Vector2 = Vector2(0,0)
+var playervec: Vector3 = Vector3(0,0,0)
 
-static var winFrontDown = Vector3(2.1,1.78,-8.3)
-static var winFrontDown1 = Vector3(-5.4,1.9,-8.3)
-static var winRightDown = Vector3(-10.8,1.9,-0.852)
-static var winBackDown = Vector3(-6.23,1.8,10.652)
-static var winBackDown2 = Vector3(7.24,1.8,10.652)
-static var winLeftDown2 = Vector3(10.85,1.8,5.005)
-static var winLeftDown = Vector3(10.85,1.8,-4.8)
+static var winFrontDown: Vector3 = Vector3(2.1,1.78,-8.3)
+static var winFrontDown1: Vector3 = Vector3(-5.4,1.9,-8.3)
+static var winRightDown: Vector3 = Vector3(-10.8,1.9,-0.852)
+static var winBackDown: Vector3 = Vector3(-6.23,1.8,10.652)
+static var winBackDown2: Vector3 = Vector3(7.24,1.8,10.652)
+static var winLeftDown2: Vector3 = Vector3(10.85,1.8,5.005)
+static var winLeftDown: Vector3 = Vector3(10.85,1.8,-4.8)
 
-var inJumpscare = false
+var inJumpscare: bool = false
 
-var firstNight = false
-var waiting = false
+var firstNight: bool = false
+var waiting: bool = false
 
 signal openNightOneDoor
 
@@ -42,15 +42,15 @@ func _window_location_match(WindowID):
 
 
 
-static var telpreddole = Vector3(2.2,0.5,-5)
-static var telpreddole1 = Vector3(-5.2,0.5,-5.9)
-static var telVpravodole = Vector3(-6.8,0.5,-0.1)
-static var telVzaduDole = Vector3(-6.1,0.5,7.8)
-static var telVzaduDole2 = Vector3(7.4,0.5,7.8)
-static var telVlevoDole2 = Vector3(8,0.5,4.9)
-static var telVlevoDole = Vector3(8.0,0.5,-5.0)
+static var telpreddole: Vector3 = Vector3(2.2,0.5,-5)
+static var telpreddole1: Vector3 = Vector3(-5.2,0.5,-5.9)
+static var telVpravodole: Vector3 = Vector3(-6.8,0.5,-0.1)
+static var telVzaduDole: Vector3 = Vector3(-6.1,0.5,7.8)
+static var telVzaduDole2: Vector3 = Vector3(7.4,0.5,7.8)
+static var telVlevoDole2: Vector3 = Vector3(8,0.5,4.9)
+static var telVlevoDole: Vector3 = Vector3(8.0,0.5,-5.0)
 
-var distraction = 0
+var distraction: int = 0
 
 func _tel_location_match(WindowID):
 	match WindowID:
@@ -71,25 +71,27 @@ func _tel_location_match(WindowID):
 		_:
 			return Vector3.ZERO
 
+
 static var theForest = Vector3(-71,0.9,-36.4)
 
+
 var nextCheck = [0,0,0,0,0,0,0]
-var nextDesOkno = 0
-var nextDesLoc = Vector3(0,0,0)
+var nextDesOkno: int = 0
+var nextDesLoc: Vector3 = Vector3(0,0,0)
 
 
-var nextDesIsWindow = false
-var reachedWinndow = false
-var isFlashed = false
-var InterestChecksLeft = 3
+var nextDesIsWindow: bool = false
+var reachedWinndow: bool  = false
+var isFlashed: bool  = false
+var InterestChecksLeft: int = 3
 
-var agression = 0
+var agression: int = 0
 
-var PlayerHunt = false
+var PlayerHunt: bool = false
 
-var playerJumpscare = false
+var playerJumpscare: bool = false
 
-var roaming = true
+var roaming: bool = true
 
 signal visualiseBreaking1
 signal visualiseBreaking2
@@ -125,13 +127,13 @@ func _ready():
 			InterestChecksLeft = 1
 			nextCheck = [1,1,1,0,1,1,1]
 		2:
-			$MonsterRoamStep.start(20)
+			$MonsterRoamStep.start(24)
 		3:
-			$MonsterRoamStep.start(15)
+			$MonsterRoamStep.start(17)
 		4:
-			$MonsterRoamStep.start(11)
+			$MonsterRoamStep.start(12)
 		5:
-			$MonsterRoamStep.start(8)
+			$MonsterRoamStep.start(9)
 
 
 @onready var nav_agent = $NavigationAgent3D
@@ -150,7 +152,7 @@ func next_destination():
 					nextCheck[randomNumber] = 1
 					foundnextdes = true
 					nextDesOkno = randomNumber
-				if nextCheck[i] == 0 and foundnextdes == false:
+				elif nextCheck[i] == 0 and foundnextdes == false:
 					nextCheck[i] = 1
 					foundnextdes = true
 					nextDesOkno = i
@@ -313,6 +315,7 @@ func _near_window(WindowID):
 						emit_signal("visualiseBreaking7")
 			if SimpletonScript.stavBarikad[WindowID] == 1:
 				SimpletonScript.stavBarikad[WindowID] = 0
+				$WoodFalling.playing = true
 				match(WindowID):
 					0:
 						emit_signal("visualiseBreaking1")
