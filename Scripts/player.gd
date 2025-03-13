@@ -295,12 +295,12 @@ func on_leftClick():
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			uiView = true
 			$Camera3D/Control/Notes.visible = true
-			$Camera3D/Control/Notes/Label.text = "The lab is closed on Mondays. Important! After 9:00, the laboratory goes through a routine disinfection. If anyone stays when the clock hits that hour, they are as well as dead. No one will be coming to save you."
+			$Camera3D/Control/Notes/Label.text = "The lab is closed on Mondays."
 		if collider.name == "NoteSeven":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			uiView = true
 			$Camera3D/Control/Notes.visible = true
-			$Camera3D/Control/Notes/Label.text = "Hey, whoever it is that has a shift up here, after me. Trust me, it is not so bad. That thing out there is loud, you will notice if its near. The people down there will also notice its here. You will not die. Just remember to keep your Flash charged, and if you see it near a window, flash it. Everything will be fine. And make yourself a coffee, now would not be the best time to fall asleep."
+			$Camera3D/Control/Notes/Label.text = "Hey, whoever it is that has a shift up here, after me. Trust me, it is not so bad. That thing out there is loud, you will notice if its near. The people down there will also notice its here. You will not die. Just remember to keep your Flash charged, and if you see it near a window, flash it. Everything will be fine. And make yourself a coffee, now would not be the best time to fall asleep. Oh, and remember to grab the keycard tommorow and open room 15!"
 		if collider.name == "Mapa":
 			$Camera3D/Control/Point.modulate = Color(1,1,1,1)
 			uiView = true
@@ -331,6 +331,7 @@ func on_leftClick():
 					if flashBatteries[i] == 0 and collider.batteryState() == 2:
 						flashBatteries[i] = 2
 						collider.takeChargedBattery()
+						$BaterkyClick.playing = true
 						update_items()
 						break
 			else:
@@ -338,6 +339,7 @@ func on_leftClick():
 					if flashBatteries[i] == 1 and collider.batteryState() == 0:
 						flashBatteries[i] = 0
 						collider.startCharging()
+						$BaterkyClick.playing = true
 						update_items()
 		if collider.name == "ViewCam":
 				emit_signal("viewcam")
@@ -467,7 +469,7 @@ func _physics_process(delta):
 		update_items()
 		LightVisible = false
 	
-	if $Camera3D/SpotLight3D.light_energy > 0.5:
+	if $Camera3D/SpotLight3D.light_energy > 0.4:
 		$Camera3D/SpotLight3D.light_energy -= 0.05 
 	
 	collider = $Camera3D/RayCast3D.get_collider()
@@ -483,7 +485,7 @@ func _physics_process(delta):
 			$Camera3D/SpotLight3D.light_energy = 0
 		else:
 			LightVisible = true
-			$Camera3D/SpotLight3D.light_energy = 1
+			$Camera3D/SpotLight3D.light_energy = 0.5
 			
 
 	

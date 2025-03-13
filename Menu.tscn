@@ -7,10 +7,10 @@
 [ext_resource type="Shader" path="res://Scripts/noise.gdshader" id="4_ip2oi"]
 [ext_resource type="Texture2D" uid="uid://c2brcu1pf0pkn" path="res://Textures/Ground037_1K-PNG/Ground037_1K-PNG_Roughness.png" id="4_mbrjk"]
 [ext_resource type="Texture2D" uid="uid://c50rigtgj1d4p" path="res://Textures/WhiteSquare.png" id="5_glmvb"]
-[ext_resource type="Environment" uid="uid://u6rj8inxjr1i" path="res://Scenes/NightLight.tres" id="5_jud6m"]
 [ext_resource type="Texture2D" uid="uid://bxvk2cwoe68hx" path="res://Textures/Bark014_1K-PNG (1)/Bark014_1K-PNG_Color.png" id="6_13y8k"]
 [ext_resource type="Texture2D" uid="uid://0os5jngscik8" path="res://Textures/Bark014_1K-PNG (1)/Bark014_1K-PNG_Roughness.png" id="7_7vlcj"]
 [ext_resource type="Material" uid="uid://b0qtt8phaijgr" path="res://Scenes/concrete.tres" id="8_d2exa"]
+[ext_resource type="Environment" uid="uid://dmil7hugf7q5y" path="res://Scenes/light2.tres" id="8_j7h1t"]
 [ext_resource type="Material" uid="uid://dxxgv0swui7aj" path="res://Scenes/plaster.tres" id="9_m1tlu"]
 [ext_resource type="Texture2D" uid="uid://2nr3hmm1mk0h" path="res://Textures/Planks037A_1K-PNG/Planks037A_1K-PNG_Color.png" id="10_4dlht"]
 [ext_resource type="Texture2D" uid="uid://c0ttbw4tavbdd" path="res://Textures/Planks037A_1K-PNG/Planks037A_1K-PNG_Displacement.png" id="11_54xsc"]
@@ -558,6 +558,27 @@ theme_override_fonts/font = ExtResource("3_tfxqt")
 theme_override_font_sizes/font_size = 60
 text = "Are you sure?"
 
+[node name="Title2" type="Label" parent="Control/BaseUI"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 1006.0
+offset_right = 424.0
+offset_bottom = 1116.0
+theme_override_fonts/font = ExtResource("3_tfxqt")
+theme_override_font_sizes/font_size = 40
+text = "Vojtěch Vízner"
+
+[node name="HowToPlay" type="Button" parent="Control/BaseUI"]
+layout_mode = 0
+offset_left = 1693.0
+offset_top = 851.0
+offset_right = 1937.0
+offset_bottom = 951.0
+theme_override_fonts/font = ExtResource("3_tfxqt")
+theme_override_font_sizes/font_size = 40
+text = "HowToPlay
+"
+
 [node name="CreditsScreen" type="Control" parent="Control"]
 visible = false
 anchors_preset = 0
@@ -623,6 +644,34 @@ Old Camera Flash – freesound_community (Pixabay)
 "
 autowrap_mode = 2
 
+[node name="HowToPlay" type="Control" parent="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1926.0
+offset_bottom = 1065.0
+
+[node name="GoBack" type="Button" parent="Control/HowToPlay"]
+layout_mode = 0
+offset_right = 213.0
+offset_bottom = 88.0
+theme_override_fonts/font = ExtResource("3_tfxqt")
+theme_override_font_sizes/font_size = 40
+text = "Go back"
+
+[node name="Title" type="Label" parent="Control/HowToPlay"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 101.0
+offset_right = 1903.0
+offset_bottom = 1048.0
+theme_override_fonts/font = ExtResource("3_tfxqt")
+theme_override_font_sizes/font_size = 50
+text = "How to play:
+Your goal is to survive the night. An entity will try to get into your house and you must not let it. Flash it when it is standing near a window, barricade the windows it has broken, try to solve tasks in the underground laboratory that will make your next night easier. Remember to rechrge the flash once you use it. On the second floor is a computer system that may aid you in your defense, but it is deactivated at first. Best of luck.
+"
+autowrap_mode = 3
+
 [node name="Bila" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_lyfvp")
 position = Vector2(981.5, 541)
@@ -644,7 +693,7 @@ transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_4xjgj")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("5_jud6m")
+environment = ExtResource("8_j7h1t")
 
 [node name="StromyMultiMesh" type="MultiMeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.18945, -1.52165, -49.6766)
@@ -684,4 +733,6 @@ autoplay = true
 [connection signal="pressed" from="Control/BaseUI/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="Control/BaseUI/New Game" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Control/BaseUI/Credits" to="Control" method="_on_credits_pressed"]
+[connection signal="pressed" from="Control/BaseUI/HowToPlay" to="Control" method="_on_how_to_play_pressed"]
 [connection signal="pressed" from="Control/CreditsScreen/GoBack" to="Control" method="_on_go_back_pressed"]
+[connection signal="pressed" from="Control/HowToPlay/GoBack" to="Control" method="_on_go_back_pressed"]

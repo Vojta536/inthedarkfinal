@@ -25,7 +25,6 @@ func _ready() -> void:
 		var file = FileAccess.open(save_path, FileAccess.WRITE)
 		file.store_var(data) 
 		file.close()
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if FileAccess.file_exists(save_path) == false:
 		var file = FileAccess.open(save_path, FileAccess.WRITE)
 		noc = 1

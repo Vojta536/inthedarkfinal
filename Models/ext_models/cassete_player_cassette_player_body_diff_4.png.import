@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bekmx2ma6knt8"
+uid="uid://cqtaf25v2h6uw"
 path.s3tc="res://.godot/imported/cassete_player_cassette_player_body_diff_4.png-a60e9d1324f51c20b7f002c9bf47e40b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "f4361215e8d45eab327d157629554768"
 }
 
 [deps]

@@ -182,7 +182,7 @@ func next_destination():
 			SimpletonScript.monsterWall = 2
 		elif nextDesOkno < 5:
 			SimpletonScript.monsterWall = 3
-		elif nextDesOkno < 6:
+		elif nextDesOkno < 7:
 			SimpletonScript.monsterWall = 4
 		match(nextDesOkno):
 			0:

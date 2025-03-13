@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6mx4fvo0ecle"
+uid="uid://c6fqtbus732in"
 path.s3tc="res://.godot/imported/utility_box_02_1k_utility_box_02_diff.jpg-bf7f2ff517ab34c79ffe16754932e85f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "ee4e27905b9eff433e69aa356e226d29"
 }
 
 [deps]

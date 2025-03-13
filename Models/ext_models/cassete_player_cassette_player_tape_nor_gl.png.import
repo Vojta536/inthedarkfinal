@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpwljpwksd5wp"
+uid="uid://b8inpaqjafnje"
 path.s3tc="res://.godot/imported/cassete_player_cassette_player_tape_nor_gl.png-c825814287e2d5b41afb1aa23b37a8f3.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "b8a2c20f8a7e5b483662035f8114d2f7"
 }
 
 [deps]
@@ -28,7 +25,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://Models/cassete_player_cassette_player_tape_nor_gl.png"
+roughness/src_normal="res://Models/ext_models/cassete_player_cassette_player_tape_nor_gl.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

@@ -1,5 +1,9 @@
-AudioStreamPlayer3D
+CollisionShape3D
+StaticBody3D
+MeshInstance3D
+SpotLight3D
 AudioStreamPlayer
+AudioStreamPlayer3D
 ScrollContainer
 VBoxContainer
 VScrollBar
